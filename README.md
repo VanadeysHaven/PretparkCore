@@ -34,6 +34,12 @@
 - `/resetinv`
   - This will reset your inventory to the default inventory.
   - Requires the `pretparkcore.bypassgm` permission node.
+- `/masscoins (amount)`
+  - This will give all online players the specified amount of coins.
+  - Command is **ONLY** available to OPs and has **NO** permission.
+- `/givecoins (player) (amount)`
+  - This will give the specified player the specified amount of coins.
+  - Command is **ONLY** available to OPs and has **NO** permission.
 
 ## Configuration File
 > The config showed here is the default config.

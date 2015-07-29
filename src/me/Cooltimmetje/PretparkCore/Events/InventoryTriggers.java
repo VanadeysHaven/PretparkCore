@@ -18,19 +18,21 @@ public class InventoryTriggers implements Listener {
     public void onRightClickItem(PlayerInteractEvent event){
         Player p = event.getPlayer();
         if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getItem().hasItemMeta()) {
-                switch (event.getItem().getType()) {
-                    default:
-                        break;
-                    case SKULL_ITEM:
-                        event.setCancelled(true);
-                        ProfileUI.openUI(p);
-                        break;
-                    case MINECART:
-                        event.setCancelled(true);
-                        p.sendMessage(MiscUtils.color("&7SoonTM")); //TODO: MAKE GUI
-                        p.playSound(p.getLocation(), Sound.ITEM_BREAK, 50, 1);
-                        break;
+            if(event.getItem() != null){
+                if (event.getItem().hasItemMeta()) {
+                    switch (event.getItem().getType()) {
+                        default:
+                            break;
+                        case SKULL_ITEM:
+                            event.setCancelled(true);
+                            ProfileUI.openUI(p);
+                            break;
+                        case MINECART:
+                            event.setCancelled(true);
+                            p.sendMessage(MiscUtils.color("&7SoonTM")); //TODO: MAKE GUI
+                            p.playSound(p.getLocation(), Sound.ITEM_BREAK, 50, 1);
+                            break;
+                    }
                 }
             }
         }

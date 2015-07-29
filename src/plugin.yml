@@ -10,3 +10,7 @@ commands:
         description: coins
     resetinv:
         description: resetinv
+    givecoins:
+        description: givecoins
+    masscoins:
+        description: masscoins

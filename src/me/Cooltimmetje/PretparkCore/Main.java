@@ -1,5 +1,6 @@
 package me.Cooltimmetje.PretparkCore;
 
+import me.Cooltimmetje.PretparkCore.Commands.AdminCoinCommand;
 import me.Cooltimmetje.PretparkCore.Commands.CoinCommand;
 import me.Cooltimmetje.PretparkCore.Commands.FixGamemode;
 import me.Cooltimmetje.PretparkCore.Commands.ResetInventory;
@@ -51,6 +52,8 @@ public class Main extends JavaPlugin {
         getCommand("fixgamemodes").setExecutor(new FixGamemode());
         getCommand("coins").setExecutor(new CoinCommand());
         getCommand("resetinv").setExecutor(new ResetInventory());
+        getCommand("givecoins").setExecutor(new AdminCoinCommand());
+        getCommand("masscoins").setExecutor(new AdminCoinCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");

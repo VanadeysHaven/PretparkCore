@@ -16,4 +16,12 @@ public class MiscUtils {
         return rand.nextInt((max - min) + 1) + min;
     }
 
+    public static boolean isInt(String str){
+        try{
+            int num = Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

@@ -43,7 +43,9 @@ public class JoinQuitEvent implements Listener {
         Database.saveData(p, true);
 
         for(Player pl : Bukkit.getOnlinePlayers()){
-            ScoreboardUtils.updateScoreboard(pl, true);
+            if(p != pl) {
+                ScoreboardUtils.updateScoreboard(pl, true);
+            }
         }
     }
 
