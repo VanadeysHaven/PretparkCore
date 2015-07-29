@@ -1,13 +1,33 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Tim Medema
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package me.Cooltimmetje.PretparkCore;
 
-import me.Cooltimmetje.PretparkCore.Commands.AdminCoinCommand;
-import me.Cooltimmetje.PretparkCore.Commands.CoinCommand;
-import me.Cooltimmetje.PretparkCore.Commands.FixGamemode;
-import me.Cooltimmetje.PretparkCore.Commands.ResetInventory;
+import me.Cooltimmetje.PretparkCore.Commands.*;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
@@ -44,8 +64,7 @@ public class Main extends JavaPlugin {
                     new JoinQuitEvent(),
                     new InventoryManager(),
                     new InventoryTriggers(),
-                    new ProfileUI(),
-                    new SwagUI()
+                    new ProfileUI()
             );
         /* EVENT END */
 
@@ -58,6 +77,8 @@ public class Main extends JavaPlugin {
         getCommand("masscoins").setExecutor(new AdminCoinCommand());
         getCommand("takecoins").setExecutor(new AdminCoinCommand());
         getCommand("setcoins").setExecutor(new AdminCoinCommand());
+        getCommand("fwr").setExecutor(new FireworkCommand());
+        getCommand("fw").setExecutor(new FireworkCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
