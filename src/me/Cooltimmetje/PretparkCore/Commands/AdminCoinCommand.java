@@ -85,7 +85,7 @@ public class AdminCoinCommand implements CommandExecutor {
                                 int amount = Integer.parseInt(args[1]);
                                 if(amount > 0){
                                     ChatUtils.sendMsgTag(p, "TakeCoins", "Je hebt &6" + amount + " coins &avan " + target.getDisplayName() + " &aafgepakt!");
-                                    PlayerUtils.setCoins(target, amount, "Afgepakt door " + p.getDisplayName() + "&6");
+                                    PlayerUtils.takeCoins(target, amount, "Afgepakt door " + p.getDisplayName() + "&6");
                                 } else {
                                     ChatUtils.sendMsgTag(p, "TakeCoins", ChatUtils.error + "Je kan alleen 1 coin of meer afpakken!");
                                 }
