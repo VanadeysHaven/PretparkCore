@@ -50,7 +50,7 @@ public class PlayerUtils {
     public static void takeCoins(Player p, int coinsGained, String reason){
         int curCoins = getCoins(p);
         Vars.coins.remove(p.getName());
-        Vars.coins.put(p.getName(), coinsGained - curCoins);
+        Vars.coins.put(p.getName(), curCoins - coinsGained);
         ChatUtils.sendMsg(p, "&6-" + coinsGained + " coins! (" + reason + ")");
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         ScoreboardUtils.updateScoreboard(p, false);
