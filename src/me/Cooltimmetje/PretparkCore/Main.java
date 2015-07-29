@@ -1,7 +1,12 @@
 package me.Cooltimmetje.PretparkCore;
 
+import me.Cooltimmetje.PretparkCore.Commands.CoinCommand;
 import me.Cooltimmetje.PretparkCore.Commands.FixGamemode;
+import me.Cooltimmetje.PretparkCore.Commands.ResetInventory;
+import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
+import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
 import me.Cooltimmetje.PretparkCore.Timers.DataSaver;
@@ -14,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
 
 /**
  * This class has been created on 28-7-2015 at 18:40 by cooltimmetje.
@@ -35,13 +39,18 @@ public class Main extends JavaPlugin {
         getLogger().info("Registering events...");
         /* EVENT START */
             registerEvents(this,
-                    new JoinQuitEvent()
+                    new JoinQuitEvent(),
+                    new InventoryManager(),
+                    new InventoryTriggers(),
+                    new ProfileUI()
             );
         /* EVENT END */
 
         getLogger().info("Registering commands...");
         /* COMMAND START */
         getCommand("fixgamemodes").setExecutor(new FixGamemode());
+        getCommand("coins").setExecutor(new CoinCommand());
+        getCommand("resetinv").setExecutor(new ResetInventory());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
@@ -69,6 +78,7 @@ public class Main extends JavaPlugin {
     public void onDisable(){
         for(Player p : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.destroyScoreboard(p);
+            Database.saveData(p, true);
         }
 
         plugin = null;

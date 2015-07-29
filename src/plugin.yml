@@ -6,3 +6,7 @@ main: me.Cooltimmetje.PretparkCore.Main
 commands:
     fixgamemodes:
         description: fixgamemodes
+    coins:
+        description: coins
+    resetinv:
+        description: resetinv

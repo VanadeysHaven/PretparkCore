@@ -11,4 +11,10 @@ public class ChatUtils {
         p.sendMessage(MiscUtils.color(msg));
     }
 
+    public static void sendMsgTag(Player p, String tag, String msg){
+        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
+    }
+
+    public static String error = "&c&lERROR! &a";
+
 }

@@ -1,7 +1,6 @@
 package me.Cooltimmetje.PretparkCore.Commands;
 
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -16,11 +15,13 @@ public class FixGamemode implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("fixgamemodes")) {
-            if(sender instanceof Player){
+            if (sender instanceof Player) {
                 Player p = (Player) sender;
-                if(p.isOp()){
+                if (p.isOp()) {
                     fixGm();
                     ChatUtils.sendMsg(p, "&eAll gamemodes have been fixed!");
+                } else {
+                    ChatUtils.sendMsgTag(p, "FixGM", ChatUtils.error + "Je mag dit niet doen!");
                 }
             } else {
                 fixGm();

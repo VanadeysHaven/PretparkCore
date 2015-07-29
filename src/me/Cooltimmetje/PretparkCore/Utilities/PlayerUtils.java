@@ -1,6 +1,7 @@
 package me.Cooltimmetje.PretparkCore.Utilities;
 
 import com.evilmidget38.UUIDFetcher;
+import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,6 +18,7 @@ public class PlayerUtils {
             p.setGameMode(GameMode.CREATIVE);
         } else {
             p.setGameMode(GameMode.ADVENTURE);
+            InventoryManager.setInventory(p);
         }
     }
 
@@ -32,7 +34,7 @@ public class PlayerUtils {
         int curCoins = getCoins(p);
         Vars.coins.remove(p.getName());
         Vars.coins.put(p.getName(), coinsGained + curCoins);
-        ChatUtils.sendMsg(p, "&6+" + coinsGained + " (" + reason + ")");
+        ChatUtils.sendMsg(p, "&6+" + coinsGained + " coins! (" + reason + ")");
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
     }
 
