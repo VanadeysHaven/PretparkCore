@@ -1,6 +1,7 @@
 package me.Cooltimmetje.PretparkCore.Events;
 
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -31,6 +32,10 @@ public class InventoryTriggers implements Listener {
                             event.setCancelled(true);
                             p.sendMessage(MiscUtils.color("&7SoonTM")); //TODO: MAKE GUI
                             p.playSound(p.getLocation(), Sound.ITEM_BREAK, 50, 1);
+                            break;
+                        case CHEST:
+                            event.setCancelled(true);
+                            SwagUI.openUI(p);
                             break;
                     }
                 }

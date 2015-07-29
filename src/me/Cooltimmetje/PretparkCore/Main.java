@@ -7,6 +7,7 @@ import me.Cooltimmetje.PretparkCore.Commands.ResetInventory;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
@@ -43,7 +44,8 @@ public class Main extends JavaPlugin {
                     new JoinQuitEvent(),
                     new InventoryManager(),
                     new InventoryTriggers(),
-                    new ProfileUI()
+                    new ProfileUI(),
+                    new SwagUI()
             );
         /* EVENT END */
 

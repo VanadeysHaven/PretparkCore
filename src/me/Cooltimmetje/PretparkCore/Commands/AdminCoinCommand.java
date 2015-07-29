@@ -49,10 +49,14 @@ public class AdminCoinCommand implements CommandExecutor {
                     if (args.length >= 1) {
                         if (MiscUtils.isInt(args[0])) {
                             int amount = Integer.parseInt(args[0]);
-                            ChatUtils.sendMsgTag(p, "MassCoins", "Je hebt &6" + amount + " coins &aaan iedereen gegeven!");
-                            ChatUtils.bcMsgTag("MassCoins", p.getDisplayName() + " &aheeft &6" + amount + " coins &aaan iedereen gegeven.");
-                            for (Player pl : Bukkit.getOnlinePlayers()) {
-                                PlayerUtils.addCoins(pl, amount, "Gekregen van " + p.getDisplayName() + "&6");
+                            if(amount > 0){
+                                ChatUtils.sendMsgTag(p, "MassCoins", "Je hebt &6" + amount + " coins &aaan iedereen gegeven!");
+                                ChatUtils.bcMsgTag("MassCoins", p.getDisplayName() + " &aheeft &6" + amount + " coins &aaan iedereen gegeven.");
+                                for (Player pl : Bukkit.getOnlinePlayers()) {
+                                    PlayerUtils.addCoins(pl, amount, "Gekregen van " + p.getDisplayName() + "&6");
+                                }
+                            } else {
+                                ChatUtils.sendMsgTag(p, "MassCoins", ChatUtils.error + "Je kan aleen 1 coin of meer geven!");
                             }
                         } else {
                             ChatUtils.sendMsgTag(p, "MassCoins", ChatUtils.error + "Zorg er voor dat het 1e argument een nummer is!");

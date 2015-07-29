@@ -36,6 +36,7 @@ public class PlayerUtils {
         Vars.coins.put(p.getName(), coinsGained + curCoins);
         ChatUtils.sendMsg(p, "&6+" + coinsGained + " coins! (" + reason + ")");
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        ScoreboardUtils.updateScoreboard(p, false);
     }
 
     public static void setCoinTime(Player p, int time){

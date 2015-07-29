@@ -25,6 +25,7 @@ public class InventoryManager implements Listener{
         ItemUtils.createInventoryDisplay(p, skull, 1);
 
         ItemUtils.createInventoryDisplay(p, Material.MINECART, 1, (byte)0, "&aAttracties &3(Rechter Klik)", "&7&oTODO", 2); //TODO: MAKE LORE
+        ItemUtils.createInventoryDisplay(p, Material.CHEST, 1, (byte) 0, "&aSwag Menu &3(Rechter Klik)", "&7Upgrade je swag naar &lOVER 9000!", 9); //TODO: MAKE LORE
     }
 
     @EventHandler
