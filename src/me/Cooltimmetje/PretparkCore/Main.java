@@ -56,6 +56,8 @@ public class Main extends JavaPlugin {
         getCommand("resetinv").setExecutor(new ResetInventory());
         getCommand("givecoins").setExecutor(new AdminCoinCommand());
         getCommand("masscoins").setExecutor(new AdminCoinCommand());
+        getCommand("takecoins").setExecutor(new AdminCoinCommand());
+        getCommand("setcoins").setExecutor(new AdminCoinCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");

@@ -39,6 +39,23 @@ public class PlayerUtils {
         ScoreboardUtils.updateScoreboard(p, false);
     }
 
+    public static void setCoins(Player p, int amount, String reason){
+        Vars.coins.remove(p.getName());
+        Vars.coins.put(p.getName(), amount);
+        p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        ScoreboardUtils.updateScoreboard(p, false);
+        ChatUtils.sendMsg(p, "&6=" + amount + " coins! (" + reason + ")");
+    }
+
+    public static void takeCoins(Player p, int coinsGained, String reason){
+        int curCoins = getCoins(p);
+        Vars.coins.remove(p.getName());
+        Vars.coins.put(p.getName(), coinsGained - curCoins);
+        ChatUtils.sendMsg(p, "&6-" + coinsGained + " coins! (" + reason + ")");
+        p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
+        ScoreboardUtils.updateScoreboard(p, false);
+    }
+
     public static void setCoinTime(Player p, int time){
         Vars.coinsTime.remove(p.getName());
         Vars.coinsTime.put(p.getName(), time);

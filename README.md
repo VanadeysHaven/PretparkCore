@@ -40,6 +40,12 @@
 - `/givecoins (player) (amount)`
   - This will give the specified player the specified amount of coins.
   - Command is **ONLY** available to OPs and has **NO** permission.
+- `/takecoins (player) (amount)`
+  - This will take the specified amount of coins from the specified player.
+  - Command is **ONLY** available to OPs and has **NO** permission.
+- `/setcoins (player) (amount)`
+   - This will set the specified amount of coins to the specified player.
+   - Command is **ONLY** available to OPs and has **NO** permission.
 
 ## Configuration File
 > The config showed here is the default config.

@@ -8,8 +8,7 @@ import org.bukkit.event.Listener;
  */
 public class SwagUI implements Listener {
 
-
-    public static void openUI(Player p) {
+    public static void openUI(Player p){
 
     }
 }

@@ -25,8 +25,12 @@ public class AdminCoinCommand implements CommandExecutor {
                         if (target != null) {
                             if (MiscUtils.isInt(args[1])) {
                                 int amount = Integer.parseInt(args[1]);
-                                ChatUtils.sendMsgTag(p, "GiveCoins", "Je hebt &6" + amount + " coins &aaan " + target.getDisplayName() + " &agegeven!");
-                                PlayerUtils.addCoins(target, amount, "Gekregen van " + p.getDisplayName() + "&6");
+                                if(amount > 0){
+                                    ChatUtils.sendMsgTag(p, "GiveCoins", "Je hebt &6" + amount + " coins &aaan " + target.getDisplayName() + " &agegeven!");
+                                    PlayerUtils.addCoins(target, amount, "Gekregen van " + p.getDisplayName() + "&6");
+                                } else {
+                                    ChatUtils.sendMsgTag(p, "GiveCoins", ChatUtils.error + "Je kan alleen 1 coin of meer geven!");
+                                }
                             } else {
                                 ChatUtils.sendMsgTag(p, "GiveCoins", ChatUtils.error + "Zorg er voor dat het 2e argument een nummer is!");
                             }
@@ -56,7 +60,7 @@ public class AdminCoinCommand implements CommandExecutor {
                                     PlayerUtils.addCoins(pl, amount, "Gekregen van " + p.getDisplayName() + "&6");
                                 }
                             } else {
-                                ChatUtils.sendMsgTag(p, "MassCoins", ChatUtils.error + "Je kan aleen 1 coin of meer geven!");
+                                ChatUtils.sendMsgTag(p, "MassCoins", ChatUtils.error + "Je kan alleen 1 coin of meer geven!");
                             }
                         } else {
                             ChatUtils.sendMsgTag(p, "MassCoins", ChatUtils.error + "Zorg er voor dat het 1e argument een nummer is!");
@@ -66,6 +70,66 @@ public class AdminCoinCommand implements CommandExecutor {
                     }
                 } else {
                     ChatUtils.sendMsgTag(p, "MassCoins", ChatUtils.error + "Je mag dit niet doen!");
+                }
+            } else {
+                Main.getPlugin().getLogger().warning("This command can only be executed by a player!");
+            }
+        } else if (cmd.getLabel().equalsIgnoreCase("takecoins")){
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                if (p.isOp()) {
+                    if (args.length >= 2) {
+                        Player target = Bukkit.getPlayer(args[0]);
+                        if (target != null) {
+                            if (MiscUtils.isInt(args[1])) {
+                                int amount = Integer.parseInt(args[1]);
+                                if(amount > 0){
+                                    ChatUtils.sendMsgTag(p, "TakeCoins", "Je hebt &6" + amount + " coins &avan " + target.getDisplayName() + " &aafgepakt!");
+                                    PlayerUtils.setCoins(target, amount, "Afgepakt door " + p.getDisplayName() + "&6");
+                                } else {
+                                    ChatUtils.sendMsgTag(p, "TakeCoins", ChatUtils.error + "Je kan alleen 1 coin of meer afpakken!");
+                                }
+                            } else {
+                                ChatUtils.sendMsgTag(p, "TakeCoins", ChatUtils.error + "Zorg er voor dat het 2e argument een nummer is!");
+                            }
+                        } else {
+                            ChatUtils.sendMsgTag(p, "TakeCoins", ChatUtils.error + "Deze speler bestaat niet of is niet online!");
+                        }
+                    } else {
+                        ChatUtils.sendMsgTag(p, "TakeCoins", ChatUtils.error + "Niet genoeg argumenten! Gebruik deze command zo: &o/takecoins <player> <hoeveelheid>");
+                    }
+                } else {
+                    ChatUtils.sendMsgTag(p, "TakeCoins", ChatUtils.error + "Je mag dit niet doen!");
+                }
+            } else {
+                Main.getPlugin().getLogger().warning("This command can only be executed by a player!");
+            }
+        } else if (cmd.getLabel().equalsIgnoreCase("setcoins")){
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                if (p.isOp()) {
+                    if (args.length >= 2) {
+                        Player target = Bukkit.getPlayer(args[0]);
+                        if (target != null) {
+                            if (MiscUtils.isInt(args[1])) {
+                                int amount = Integer.parseInt(args[1]);
+                                if(amount > 0){
+                                    ChatUtils.sendMsgTag(p, "SetCoins", target.getDisplayName() + " &aheeft nu &6" + amount + " coins&a!");
+                                    PlayerUtils.setCoins(target, amount, "Ingesteld door " + p.getDisplayName() + "&6");
+                                } else {
+                                    ChatUtils.sendMsgTag(p, "SetCoins", ChatUtils.error + "Je kan alleen 1 coin of meer instellen!");
+                                }
+                            } else {
+                                ChatUtils.sendMsgTag(p, "SetCoins", ChatUtils.error + "Zorg er voor dat het 2e argument een nummer is!");
+                            }
+                        } else {
+                            ChatUtils.sendMsgTag(p, "SetCoins", ChatUtils.error + "Deze speler bestaat niet of is niet online!");
+                        }
+                    } else {
+                        ChatUtils.sendMsgTag(p, "SetCoins", ChatUtils.error + "Niet genoeg argumenten! Gebruik deze command zo: &o/setcoins <player> <hoeveelheid>");
+                    }
+                } else {
+                    ChatUtils.sendMsgTag(p, "SetCoins", ChatUtils.error + "Je mag dit niet doen!");
                 }
             } else {
                 Main.getPlugin().getLogger().warning("This command can only be executed by a player!");
