@@ -101,7 +101,7 @@ public class RideCommands implements CommandExecutor {
                     for (int i : Vars.rideName.keySet()) {
                         String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
 
-                        ChatUtils.sendMsg(p, "&a" + i + " &b- &a" + Vars.rideName.get(i) + " &b- &a" + status + " &b- &a" + MiscUtils.locationToString(Vars.rideLocation.get(i)));
+                        ChatUtils.sendMsg(p, "&a" + i + " &b- &a" + Vars.rideName.get(i) + " &b- &a" + status + " &b- &a(" + MiscUtils.locationToString(Vars.rideLocation.get(i)) + ")");
                     }
                 } else {
                     ChatUtils.sendMsgTag(p, "ListRides", ChatUtils.error + "Je mag dit niet doen!");
@@ -112,7 +112,7 @@ public class RideCommands implements CommandExecutor {
                 for(int i : Vars.rideName.keySet()){
                     String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
 
-                    sender.sendMessage(i + " - " + Vars.rideName.get(i) + " - "  + status + "&r - " + MiscUtils.locationToString(Vars.rideLocation.get(i)));
+                    sender.sendMessage(i + " - " + Vars.rideName.get(i) + " - "  + status + "&r - (" + MiscUtils.locationToString(Vars.rideLocation.get(i)) + ")");
                 }
             }
         } else if (cmd.getLabel().equalsIgnoreCase("reloadrides")){

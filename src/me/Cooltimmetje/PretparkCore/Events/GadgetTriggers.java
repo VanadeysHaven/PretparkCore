@@ -24,9 +24,8 @@
 
 package me.Cooltimmetje.PretparkCore.Events;
 
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
+import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,9 +33,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
- * This class has been created on 29-7-2015 at 15:55 by cooltimmetje.
+ * This class has been created on 30-7-2015 at 21:34 by cooltimmetje.
  */
-public class InventoryTriggers implements Listener {
+public class GadgetTriggers implements Listener {
 
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
@@ -47,17 +46,14 @@ public class InventoryTriggers implements Listener {
                     switch (event.getItem().getType()) {
                         default:
                             break;
-                        case SKULL_ITEM:
+                        case FIREWORK_CHARGE:
                             event.setCancelled(true);
-                            ProfileUI.openUI(p);
+                            GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
                             break;
-                        case MINECART:
+                        case FIREWORK:
                             event.setCancelled(true);
-                            RideUI.openUI(p);
-                            break;
-                        case CHEST:
-                            event.setCancelled(true);
-                            SwagUI.openUI(p);
+                            Firework fw = GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
+                            fw.setPassenger(p);
                             break;
                     }
                 }

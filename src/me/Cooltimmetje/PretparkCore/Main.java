@@ -25,10 +25,13 @@
 package me.Cooltimmetje.PretparkCore;
 
 import me.Cooltimmetje.PretparkCore.Commands.*;
+import me.Cooltimmetje.PretparkCore.Events.GadgetTriggers;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.GadgetUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
@@ -65,7 +68,10 @@ public class Main extends JavaPlugin {
                     new InventoryManager(),
                     new InventoryTriggers(),
                     new ProfileUI(),
-                    new RideUI()
+                    new RideUI(),
+                    new SwagUI(),
+                    new GadgetUI(),
+                    new GadgetTriggers()
             );
         /* EVENT END */
 
@@ -78,8 +84,6 @@ public class Main extends JavaPlugin {
         getCommand("masscoins").setExecutor(new AdminCoinCommand());
         getCommand("takecoins").setExecutor(new AdminCoinCommand());
         getCommand("setcoins").setExecutor(new AdminCoinCommand());
-        getCommand("fwr").setExecutor(new FireworkCommand());
-        getCommand("fw").setExecutor(new FireworkCommand());
         getCommand("listrides").setExecutor(new RideCommands());
         getCommand("changeride").setExecutor(new RideCommands());
         getCommand("reloadrides").setExecutor(new RideCommands());

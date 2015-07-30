@@ -29,6 +29,7 @@ import me.Cooltimmetje.PretparkCore.Utilities.ItemUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -50,9 +51,15 @@ public class RideUI implements Listener {
             String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
             int color = MiscUtils.getStateClay(Vars.rideStatus.get(i));
 
-            ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!", inv, slot);
+            ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!\n&8ID: " + i, inv, slot);
             slot = slot + 1;
         }
+
+
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 0, "&aZet filter uit. &7&o(Geselecteerd)", "&aKlik om de filter uit te zetten.", inv, 51);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 5, "&aFilter op: &2open", "&aKlik om te filteren.", inv, 52);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 14, "&aFilter op: &cdicht", "&aKlik om te filteren.", inv, 53);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 1, "&aFilter op: &6onderhoud", "&aKlik om te filteren.", inv, 54);
 
         p.openInventory(inv);
     }
@@ -67,15 +74,31 @@ public class RideUI implements Listener {
                     default:
                         break;
                     case STAINED_CLAY:
-                        p.closeInventory();
-                        if(Vars.rideSlot.containsKey(event.getSlot())) {
-                            int id = Vars.rideSlot.get(event.getSlot());
+                        if(event.getSlot() == 50 || event.getSlot() == 51 || event.getSlot() == 52 || event.getSlot() == 53){
+                            switch (event.getSlot()){
+                                case 50:
+                                    resetFilter(event.getInventory());
+                                    break;
+                                case 51:
+                                    filterOpen(event.getInventory());
+                                    break;
+                                case 52:
+                                    filterClose(event.getInventory());
+                                    break;
+                                case 53:
+                                    filterMaintenance(event.getInventory());
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } else {
+                            p.closeInventory();
+                            int id = Integer.parseInt(ChatColor.stripColor(event.getCurrentItem().getItemMeta().getLore().get(1).replace("ID: ", " ")).trim());
                             Location loc = Vars.rideLocation.get(id);
                             String name = Vars.rideName.get(id);
                             p.teleport(loc);
-                            p.teleport(p.getLocation().add(0.5,0,0.5));
+                            p.teleport(p.getLocation().add(0.5, 0, 0.5));
                             ChatUtils.sendMsgTag(p, "Teleport", "Je bent geteleporteerd naar de &6" + name + "&a!");
-                        } else {
                             break;
                         }
                 }
@@ -85,6 +108,81 @@ public class RideUI implements Listener {
         } else {
             return;
         }
+    }
+
+    private void resetFilter(Inventory inv) {
+        int slot = 1;
+        for(int i : Vars.rideName.keySet()){
+            String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
+            int color = MiscUtils.getStateClay(Vars.rideStatus.get(i));
+
+            ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!\n&8ID: " + i, inv, slot);
+            slot = slot + 1;
+        }
+
+
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 0, "&aZet filter uit. &7&o(Geselecteerd)", "&aKlik om de filter uit te zetten.", inv, 51);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 5, "&aFilter op: &2open", "&aKlik om te filteren.", inv, 52);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 14, "&aFilter op: &cdicht", "&aKlik om te filteren.", inv, 53);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 1, "&aFilter op: &6onderhoud", "&aKlik om te filteren.", inv, 54);
+    }
+
+    private void filterMaintenance(Inventory inv) {
+        inv.clear();
+
+        int slot = 1;
+        for(int i : Vars.rideName.keySet()){
+            String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
+            int color = MiscUtils.getStateClay(Vars.rideStatus.get(i));
+            if(color == 1) {
+                ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!\n&8ID: " + i, inv, slot);
+                slot = slot + 1;
+            }
+        }
+
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 0, "&aZet filter uit.", "&aKlik om de filter uit te zetten", inv, 51);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 5, "&aFilter op: &2open", "&aKlik om te filteren.", inv, 52);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 14, "&aFilter op: &cdicht", "&aKlik om te filteren.", inv, 53);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 1, "&aFilter op: &6onderhoud &7&o(Geselecteerd)", "&aKlik om te filteren.", inv, 54);
+    }
+
+    private void filterClose(Inventory inv) {
+        inv.clear();
+
+        int slot = 1;
+        for(int i : Vars.rideName.keySet()){
+            String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
+            int color = MiscUtils.getStateClay(Vars.rideStatus.get(i));
+            if(color == 14) {
+                ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!\n&8ID: " + i, inv, slot);
+                slot = slot + 1;
+            }
+        }
+
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 0, "&aZet filter uit.", "&aKlik om de filter uit te zetten", inv, 51);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 5, "&aFilter op: &2open", "&aKlik om te filteren.", inv, 52);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 14, "&aFilter op: &cdicht &7&o(Geselecteerd)", "&aKlik om te filteren.", inv, 53);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 1, "&aFilter op: &6onderhoud", "&aKlik om te filteren.", inv, 54);
+    }
+
+    private void filterOpen(Inventory inv) {
+        inv.clear();
+
+        int slot = 1;
+        for(int i : Vars.rideName.keySet()){
+            String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
+            int color = MiscUtils.getStateClay(Vars.rideStatus.get(i));
+            if(color == 5) {
+                ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!\n&8ID: " + i, inv, slot);
+                slot = slot + 1;
+            }
+        }
+
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 0, "&aZet filter uit.", "&aKlik om de filter uit te zetten", inv, 51);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 5, "&aFilter op: &2open &7&o(Geselecteerd)", "&aKlik om te filteren.", inv, 52);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 14, "&aFilter op: &cdicht", "&aKlik om te filteren.", inv, 53);
+        ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) 1, "&aFilter op: &6onderhoud", "&aKlik om te filteren.", inv, 54);
+
     }
 
 }
