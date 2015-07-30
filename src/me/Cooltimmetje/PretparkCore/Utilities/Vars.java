@@ -25,6 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Utilities;
 
 import me.Cooltimmetje.PretparkCore.Main;
+import org.bukkit.Location;
 
 import java.util.HashMap;
 
@@ -43,6 +44,12 @@ public class Vars {
     public static HashMap<String, Integer> coins = new HashMap<>();
     public static HashMap<String, Integer> coinsTime = new HashMap<>();
     public static HashMap<String, Integer> globaldata = new HashMap<>();
+    public static HashMap<Integer, String> rideName = new HashMap<>();
+    public static HashMap<Integer, Location> rideLocation = new HashMap<>();
+    public static HashMap<Integer, Boolean> rideStatus = new HashMap<>();
+    public static HashMap<Integer, Integer> rideSlot = new HashMap<>();
+
+    /* ARRAY LISTS */
 
     public static void setGlobaldata(){
         globaldata.put("uniqueplayers", Main.getPlugin().getConfig().getInt("Globaldata.uniqueusers"));

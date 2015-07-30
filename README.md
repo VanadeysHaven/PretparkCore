@@ -46,6 +46,18 @@
 - `/setcoins (player) (amount)`
    - This will set the specified amount of coins to the specified player.
    - Command is **ONLY** available to OPs and has **NO** permission.
+- `/listrides`
+   - This command will list all registered rides in the database.
+   - The rides will be showed in this format: `id - name - status - location(x,y,z)`
+   - Command is **ONLY** available to OPs and has **NO** permission.
+- `/toggleride (id)`
+   - This will toggle the status of a ride.
+   - This will **NOT** make it closed in the world. Only for the plugin **ONLY USE THIS FOR DEBUGGING, CORRECTING OR IN A COMMANDBLOCK THAT IS CONNECTED TO THE OPENING AND CLOSING SQUENCE OF THE RIDE!**
+   - Command is **ONLY** available to OPs and has **NO** permission.
+- `/reloadrides`
+    - This command will reload all rides from the database.
+    - Command is **ONLY** available to OPs and has **NO** permission.
+
 
 ## Configuration File
 > The config showed here is the default config.

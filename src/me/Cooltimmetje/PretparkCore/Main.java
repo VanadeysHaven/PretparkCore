@@ -28,6 +28,7 @@ import me.Cooltimmetje.PretparkCore.Commands.*;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
@@ -36,7 +37,6 @@ import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -64,7 +64,8 @@ public class Main extends JavaPlugin {
                     new JoinQuitEvent(),
                     new InventoryManager(),
                     new InventoryTriggers(),
-                    new ProfileUI()
+                    new ProfileUI(),
+                    new RideUI()
             );
         /* EVENT END */
 
@@ -79,6 +80,9 @@ public class Main extends JavaPlugin {
         getCommand("setcoins").setExecutor(new AdminCoinCommand());
         getCommand("fwr").setExecutor(new FireworkCommand());
         getCommand("fw").setExecutor(new FireworkCommand());
+        getCommand("listrides").setExecutor(new RideCommands());
+        getCommand("toggleride").setExecutor(new RideCommands());
+        getCommand("reloadrides").setExecutor(new RideCommands());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
@@ -97,6 +101,7 @@ public class Main extends JavaPlugin {
         }
         DataSaver.dataSaver();
         CoinsGiver.coinsGiver();
+        Database.loadRides();
         /* SETUP STOP */
 
         getLogger().info("Plugin loading succeeded! The plugin is now ready for use. (Loadtime: " + stopLoad() + "ms)");
@@ -126,9 +131,9 @@ public class Main extends JavaPlugin {
         }
     }
 
-    public void registerCommand(String cmd, CommandExecutor executor){
+    /*public void registerCommand(String cmd, CommandExecutor executor){
         getCommand(cmd).setExecutor(executor);
-    }
+    }*/
 
     public void hookAPI(String api){
         if (getServer().getPluginManager().getPlugin(api) != null && getServer().getPluginManager().getPlugin(api).isEnabled())

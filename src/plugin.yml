@@ -22,3 +22,9 @@ commands:
         description: fw
     fwr:
         description: fwr
+    listrides:
+        description: listrides
+    toggleride:
+        description: toggleride
+    reloadrides:
+        description: reloadrides

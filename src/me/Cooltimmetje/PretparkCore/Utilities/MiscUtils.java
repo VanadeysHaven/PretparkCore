@@ -32,6 +32,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -150,5 +151,16 @@ public class MiscUtils {
         }
 
         return c;
+    }
+
+    public static Location formatLocation(String location) {
+        String[] xyz = location.split(",");
+        Location loc = Bukkit.getWorld("world").getBlockAt(Integer.parseInt(xyz[0]), Integer.parseInt(xyz[1]), Integer.parseInt(xyz[2])).getLocation();
+        return loc;
+    }
+
+    public static String locationToString(Location location) {
+        DecimalFormat df = new DecimalFormat("###.#");
+        return df.format(location.getX()) + "," + df.format(location.getY()) + "," + df.format(location.getZ());
     }
 }

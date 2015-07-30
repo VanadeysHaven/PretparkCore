@@ -25,8 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Events;
 
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
-import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
-import org.bukkit.Sound;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,8 +52,7 @@ public class InventoryTriggers implements Listener {
                             break;
                         case MINECART:
                             event.setCancelled(true);
-                            p.sendMessage(MiscUtils.color("&7SoonTM")); //TODO: MAKE GUI
-                            p.playSound(p.getLocation(), Sound.ITEM_BREAK, 50, 1);
+                            RideUI.openUI(p);
                             break;
                         case CHEST:
                             event.setCancelled(true);
