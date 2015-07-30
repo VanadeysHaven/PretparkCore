@@ -26,6 +26,7 @@ package me.Cooltimmetje.PretparkCore.Events.UserInterfaces;
 
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ItemUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -46,12 +47,9 @@ public class RideUI implements Listener {
 
         int slot = 1;
         for(int i : Vars.rideName.keySet()){
-            int color = 14;
-            String status = "&cdicht";
-            if(Vars.rideStatus.get(i)){
-                color = 5;
-                status = "&2open";
-            }
+            String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
+            int color = MiscUtils.getStateClay(Vars.rideStatus.get(i));
+
             ItemUtils.createChestDisplay(Material.STAINED_CLAY, 1, (byte) color, "&a" + Vars.rideName.get(i) + " &8\u00BB " + status, "&aKlik om te warpen!", inv, slot);
             slot = slot + 1;
         }
@@ -74,7 +72,8 @@ public class RideUI implements Listener {
                             int id = Vars.rideSlot.get(event.getSlot());
                             Location loc = Vars.rideLocation.get(id);
                             String name = Vars.rideName.get(id);
-                            p.teleport(loc.add(0.5, 0, 0.5));
+                            p.teleport(loc);
+                            p.teleport(p.getLocation().add(0.5,0,0.5));
                             ChatUtils.sendMsgTag(p, "Teleport", "Je bent geteleporteerd naar de &6" + name + "&a!");
                         } else {
                             break;

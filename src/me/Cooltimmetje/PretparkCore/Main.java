@@ -81,7 +81,7 @@ public class Main extends JavaPlugin {
         getCommand("fwr").setExecutor(new FireworkCommand());
         getCommand("fw").setExecutor(new FireworkCommand());
         getCommand("listrides").setExecutor(new RideCommands());
-        getCommand("toggleride").setExecutor(new RideCommands());
+        getCommand("changeride").setExecutor(new RideCommands());
         getCommand("reloadrides").setExecutor(new RideCommands());
         /* COMMAND END */
 

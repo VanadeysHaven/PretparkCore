@@ -46,7 +46,7 @@ public class Vars {
     public static HashMap<String, Integer> globaldata = new HashMap<>();
     public static HashMap<Integer, String> rideName = new HashMap<>();
     public static HashMap<Integer, Location> rideLocation = new HashMap<>();
-    public static HashMap<Integer, Boolean> rideStatus = new HashMap<>();
+    public static HashMap<Integer, String> rideStatus = new HashMap<>();
     public static HashMap<Integer, Integer> rideSlot = new HashMap<>();
 
     /* ARRAY LISTS */

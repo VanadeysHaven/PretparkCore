@@ -206,12 +206,45 @@ public class Database {
         Vars.coinsTime.remove(p.getName());
     }
 
+    public static void saveRides(int id){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String saveData = "UPDATE rides SET status=? WHERE id=?";
+
+        try{
+            c = hikari.getConnection();
+            ps = c.prepareStatement(saveData);
+
+            ps.setString(1, Vars.rideStatus.get(id));
+            ps.setInt(2, id);
+
+            ps.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
     public static void loadRides(){
         Vars.rideName.clear();
         Vars.rideStatus.clear();
         Vars.rideLocation.clear();
 
-        Vars.rideName.clear();
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -227,7 +260,7 @@ public class Database {
                 Vars.rideName.put(rs.getInt("id"), rs.getString("name"));
                 Location loc = MiscUtils.formatLocation(rs.getString("location"));
                 Vars.rideLocation.put(rs.getInt("id"), loc);
-                Vars.rideStatus.put(rs.getInt("id"), false);
+                Vars.rideStatus.put(rs.getInt("id"), rs.getString("status"));
                 Vars.rideSlot.put(slot, rs.getInt("id"));
                 slot = slot + 1;
             }

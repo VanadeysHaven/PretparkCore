@@ -163,4 +163,30 @@ public class MiscUtils {
         DecimalFormat df = new DecimalFormat("###.#");
         return df.format(location.getX()) + "," + df.format(location.getY()) + "," + df.format(location.getZ());
     }
+
+    public static String getStateString(String stateChar){
+        switch(stateChar){
+            case "o":
+                return "&2open";
+            case "d":
+                return "&cdicht";
+            case "m":
+                return "&6onderhoud";
+            default:
+                return null;
+        }
+    }
+
+    public static int getStateClay(String stateChar) {
+        switch(stateChar){
+            case "o":
+                return 5;
+            case "d":
+                return 14;
+            case "m":
+                return 1;
+            default:
+                return 0;
+        }
+    }
 }

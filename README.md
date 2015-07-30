@@ -50,7 +50,7 @@
    - This command will list all registered rides in the database.
    - The rides will be showed in this format: `id - name - status - location(x,y,z)`
    - Command is **ONLY** available to OPs and has **NO** permission.
-- `/toggleride (id)`
+- `/changeride (id) (o/d/m)`
    - This will toggle the status of a ride.
    - This will **NOT** make it closed in the world. Only for the plugin **ONLY USE THIS FOR DEBUGGING, CORRECTING OR IN A COMMANDBLOCK THAT IS CONNECTED TO THE OPENING AND CLOSING SQUENCE OF THE RIDE!**
    - Command is **ONLY** available to OPs and has **NO** permission.

@@ -26,6 +26,7 @@ package me.Cooltimmetje.PretparkCore.Timers;
 
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -40,6 +41,9 @@ public class DataSaver {
             public void run() {
                 for(Player p : Bukkit.getOnlinePlayers()){
                     Database.saveData(p, false);
+                }
+                for(int i : Vars.rideStatus.keySet()){
+                    Database.saveRides(i);
                 }
             }
         });

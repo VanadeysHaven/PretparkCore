@@ -33,61 +33,63 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 /**
  * This class has been created on 30-7-2015 at 10:25 by cooltimmetje.
  */
 public class RideCommands implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("toggleride")) {
+        if (cmd.getName().equalsIgnoreCase("changeride")) { // <id> <state>
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 if(p.isOp()){
-                    if(args.length >= 1){
+                    if(args.length >= 2){
                         if(MiscUtils.isInt(args[0])){
-                            int i = Integer.parseInt(args[0]);
-                            if(Vars.rideName.containsKey(i)){
-                                boolean curStatus = Vars.rideStatus.get(i);
-                                Vars.rideStatus.remove(i);
-                                Vars.rideStatus.put(i, !curStatus);
-                                if(curStatus) {
-                                    ChatUtils.sendMsgTag(p, "ToggleRide", "De &6" + Vars.rideName.get(i) + " &astaat nu gemarkeerd als &cgesloten&a! &lLet wel dat hij nog open kan zijn!");
+                            if(Objects.equals(args[1], "o") || Objects.equals(args[1], "d") || Objects.equals(args[1], "m")){
+                                int i = Integer.parseInt(args[0]);
+                                if (Vars.rideName.containsKey(i)){
+                                    Vars.rideStatus.remove(i);
+                                    Vars.rideStatus.put(i, args[1]);
+                                    ChatUtils.sendMsgTag(p, "ChangeRide", "De &6" + Vars.rideName.get(i) +
+                                            " &ais nu gemarkeerd als " + MiscUtils.getStateString(Vars.rideStatus.get(i)));
                                 } else {
-                                    ChatUtils.sendMsgTag(p, "ToggleRide", "De &6" + Vars.rideName.get(i) + " &astaat nu gemarkeerd als &2geopened&a! &lLet wel dat hij nog dicht kan zijn!");
+                                    ChatUtils.sendMsgTag(p, "ChangeRide", ChatUtils.error + "Deze attractie bestaat niet! Gebruik &o/listrides &aom het juiste id te vinden!");
                                 }
                             } else {
-                                ChatUtils.sendMsgTag(p, "ToggleRide", ChatUtils.error + "Deze attractie bestaat niet, gebruik &o/listrides &aom alle atracties met hun id te zien!");
+                                ChatUtils.sendMsgTag(p, "ChangeRide", ChatUtils.error + "Zorg dat het 2e argument een o,d of m is! Gebruik deze command zo: &o/changeride <id> <o/d/m>");
                             }
                         } else {
-                            ChatUtils.sendMsgTag(p, "ToggleRide", ChatUtils.error + "Zorg dat het 1e argument een nummer is! Gebruik deze command zo: &o/toggleride <id>");
+                            ChatUtils.sendMsgTag(p, "ChangeRide", ChatUtils.error + "Zorg dat het 1e argument een nummer is! Gebruik deze command zo: &o/changeride <id> <o/d/m>");
                         }
                     } else {
-                        ChatUtils.sendMsgTag(p, "ToggleRide", ChatUtils.error + "Niet genoeg argumenten! Gebruik deze command zo: &o/toggleride <id>");
+                        ChatUtils.sendMsgTag(p, "ChangeRide", ChatUtils.error + "Niet genoeg argumenten! Gebruik deze command zo: &o/changeride <id> <o/d/m>");
                     }
                 } else {
-                    ChatUtils.sendMsgTag(p, "ToggleRides", ChatUtils.error + "Je mag dit niet doen!");
+                    ChatUtils.sendMsgTag(p, "ChangeRide", ChatUtils.error + "Je mag dit niet doen!");
                 }
             } else {
-                if(args.length >= 1){
+                if(args.length >= 2){
                     if(MiscUtils.isInt(args[0])){
-                        int i = Integer.parseInt(args[0]);
-                        if(Vars.rideName.containsKey(i)){
-                            boolean curStatus = Vars.rideStatus.get(i);
-                            Vars.rideStatus.remove(i);
-                            Vars.rideStatus.put(i, !curStatus);
-                            if(curStatus) {
-                                sender.sendMessage("De " + Vars.rideName.get(i) + " staat nu gemarkeerd als gesloten! Let wel dat hij nog open kan zijn!");
+                        if(Objects.equals(args[1], "o") || Objects.equals(args[1], "d") || Objects.equals(args[1], "m")){
+                            int i = Integer.parseInt(args[0]);
+                            if (Vars.rideName.containsKey(i)){
+                                Vars.rideStatus.remove(i);
+                                Vars.rideStatus.put(i, args[1]);
+                                sender.sendMessage("De " + Vars.rideName.get(i) +
+                                        " is nu gemarkeerd als " + MiscUtils.getStateString(Vars.rideStatus.get(i)));
                             } else {
-                                sender.sendMessage("De " + Vars.rideName.get(i) + " staat nu gemarkeerd als geopened! Let wel dat hij nog dicht kan zijn!");
+                                sender.sendMessage("Deze attractie bestaat niet! Gebruik /listrides om het juiste id te vinden!");
                             }
                         } else {
-                            sender.sendMessage("Deze attractie bestaat niet, gebruik /listrides om alle atracties met hun id te zien!");
+                            sender.sendMessage("Zorg dat het 2e argument een o,d of m is! Gebruik deze command zo: /changeride <id> <o/d/m>");
                         }
                     } else {
-                        sender.sendMessage("Zorg dat het 1e argument een nummer is! Gebruik deze command zo: /toggleride <id>");
+                        sender.sendMessage("Zorg dat het 1e argument een nummer is! Gebruik deze command zo: /changeride <id> <o/d/m>");
                     }
                 } else {
-                    sender.sendMessage("Niet genoeg argumenten! Gebruik deze command zo: /toggleride <id>");
+                    sender.sendMessage("Niet genoeg argumenten! Gebruik deze command zo: /changeride <id> <o/d/m>");
                 }
             }
         } else if (cmd.getLabel().equalsIgnoreCase("listrides")){
@@ -97,10 +99,7 @@ public class RideCommands implements CommandExecutor {
                     ChatUtils.sendMsg(p, "&3------ &aALLE ATTRACTIES &3------");
                     ChatUtils.sendMsg(p, "&aID &b- &aNaam &b- &aStatus &b- &aLocatie");
                     for (int i : Vars.rideName.keySet()) {
-                        String status = "&cdicht";
-                        if (Vars.rideStatus.get(i)) {
-                            status = "&2open";
-                        }
+                        String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
 
                         ChatUtils.sendMsg(p, "&a" + i + " &b- &a" + Vars.rideName.get(i) + " &b- &a" + status + " &b- &a" + MiscUtils.locationToString(Vars.rideLocation.get(i)));
                     }
@@ -111,18 +110,18 @@ public class RideCommands implements CommandExecutor {
                 sender.sendMessage("------ ALLE ATTRACTIES ------");
                 sender.sendMessage("ID - Naam - Status - Locatie");
                 for(int i : Vars.rideName.keySet()){
-                    String status = "dicht";
-                    if(Vars.rideStatus.get(i)){
-                        status = "open";
-                    }
+                    String status = MiscUtils.getStateString(Vars.rideStatus.get(i));
 
-                    sender.sendMessage(i + " - " + Vars.rideName.get(i) + " - "  + status + " - " + MiscUtils.locationToString(Vars.rideLocation.get(i)));
+                    sender.sendMessage(i + " - " + Vars.rideName.get(i) + " - "  + status + "&r - " + MiscUtils.locationToString(Vars.rideLocation.get(i)));
                 }
             }
         } else if (cmd.getLabel().equalsIgnoreCase("reloadrides")){
             if(sender instanceof Player){
                 Player p = (Player) sender;
                 if(p.isOp()){
+                    for(int i : Vars.rideName.keySet()) {
+                        Database.saveRides(i);
+                    }
                     Database.loadRides();
                     ChatUtils.sendMsgTag(p, "ReloadRides", "Alle attracties zijn opnieuw geladen vanuit de database!");
                 } else {
