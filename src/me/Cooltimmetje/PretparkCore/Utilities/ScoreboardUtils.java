@@ -63,7 +63,7 @@ public class ScoreboardUtils {
     }
 
     public static void updateScoreboard(Player p, boolean leave){
-        Scoreboard board = scoreboards.get(p.getName()); //TODO: != null
+        Scoreboard board = scoreboards.get(p.getName());
         if(board != null){
             scoreboards.remove(p.getName());
             Objective objective = board.getObjective(DisplaySlot.SIDEBAR);

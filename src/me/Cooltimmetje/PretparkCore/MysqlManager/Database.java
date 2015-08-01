@@ -79,7 +79,6 @@ public class Database {
 
         } catch (SQLException e){
             e.printStackTrace();
-            //TODO: ASK THIJS WHAT TO DO WHEN THIS HAPPENS
         } finally {
             if(c != null){
                 try {
