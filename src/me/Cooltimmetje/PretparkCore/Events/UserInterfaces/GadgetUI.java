@@ -42,14 +42,17 @@ public class GadgetUI implements Listener {
     public static void openUI(Player p){
         Inventory inv = Bukkit.createInventory(null, 54, "Gadgets");
 
-        ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", " \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", inv, 1);
-        ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", " \n&3Het zelfde vuurwerkje, maar dan next level! \n&3Probeer het eens uit!", inv, 2);
+        ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", inv, 1);
+        ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
+                "\n&3Probeer het eens uit!'\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
+                "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!", inv, 2);
 //        ItemUtils.createChestDisplay(Material.RECORD_11, 1, 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", inv, 3);
 
         p.openInventory(inv);
     }
 
     @EventHandler
+    @SuppressWarnings("all")
     public void onInventoryClick(InventoryClickEvent event){
         if(event.getInventory().getName().equals("Gadgets")){
             Player p = (Player) event.getWhoClicked();
@@ -63,14 +66,15 @@ public class GadgetUI implements Listener {
                         p.getInventory().setHeldItemSlot(7);
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
                         ItemUtils.createInventoryDisplay(p, Material.FIREWORK_CHARGE, 1, (byte)0, "&aGadget &8\u00BB &aVuurwerk &3(Rechter Klik)",
-                                " \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", 8);
+                                "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", 8);
                         break;
                     case FIREWORK:
                         p.closeInventory();
                         p.getInventory().setHeldItemSlot(7);
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
                         ItemUtils.createInventoryDisplay(p, Material.FIREWORK, 1, (byte) 0, "&aGadget &8\u00BB &aVuurwerk Ritje &3(Rechter Klik)",
-                                " \n&3Het zelfde vuurwerkje, maar dan next level! \n&3Probeer het eens uit!", 8);
+                                "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! \n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
+                                        "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!", 8);
                         break;
                     case RECORD_11:
                         p.closeInventory();

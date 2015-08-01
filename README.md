@@ -23,6 +23,7 @@
   - This permission grants the following things:
     - Players with this permission will be allowed to use the _Attractie Menu_ sign's.
     - Players with this permission have access to the `/control` command.
+    - Players with this permission will get another item in their hotbar to control rides.
     
 ## Commands
 > Arguments: (required) [optional]

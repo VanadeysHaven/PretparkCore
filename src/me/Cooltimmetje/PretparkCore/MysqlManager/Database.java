@@ -338,7 +338,7 @@ public class Database {
     public static void saveVars(String var, String value){
         Connection c = null;
         PreparedStatement ps = null;
-        String load = "INSERT INTO signlink VALUES (?,?) ON DUPLICATE KEY UPDATE variable=?;";
+        String load = "INSERT INTO signlink VALUES (?,?) ON DUPLICATE KEY UPDATE value=?;";
 
         try{
             c = hikari.getConnection();
@@ -346,7 +346,7 @@ public class Database {
 
             ps.setString(1, var);
             ps.setString(2, value);
-            ps.setString(3, var);
+            ps.setString(3, value);
 
             ps.execute();
         } catch (SQLException e){

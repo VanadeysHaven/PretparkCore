@@ -156,8 +156,7 @@ public class MiscUtils {
 
     public static Location formatLocation(String location) {
         String[] xyz = location.split(",");
-        Location loc = Bukkit.getWorld("world").getBlockAt(Integer.parseInt(xyz[0]), Integer.parseInt(xyz[1]), Integer.parseInt(xyz[2])).getLocation();
-        return loc;
+        return Bukkit.getWorld("world").getBlockAt(Integer.parseInt(xyz[0]), Integer.parseInt(xyz[1]), Integer.parseInt(xyz[2])).getLocation();
     }
 
     public static String locationToString(Location location) {
@@ -203,5 +202,26 @@ public class MiscUtils {
 
     public static String getVar(String varName){
         return SignLinkEvent.variableValues.get(varName);
+    }
+
+    public static boolean cooldownCheck(long lastused, int cdtime){
+        long currentTime = System.currentTimeMillis();
+        int cdmillis = cdtime * 1000;
+        return currentTime - lastused >= cdmillis;
+    }
+
+    public static int getTimeRemaining(long lastUsed, int cdtime){
+        long currentTime = System.currentTimeMillis();
+
+        return (int) (((currentTime - lastUsed ) / 1000) - cdtime) * -1;
+    }
+
+    public static String formatTime(int seconds){
+        int minutes = 0;
+        while(seconds >= 60){
+            seconds = seconds - 60;
+            minutes = minutes + 1;
+        }
+        return minutes + "m" + seconds + "s";
     }
 }

@@ -24,9 +24,11 @@
 
 package me.Cooltimmetje.PretparkCore.Events;
 
+import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Firework;
@@ -36,10 +38,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.HashMap;
+
 /**
  * This class has been created on 30-7-2015 at 21:34 by cooltimmetje.
  */
 public class GadgetTriggers implements Listener {
+
+    HashMap<String, Long> cdFirework = new HashMap<>();
+    HashMap<String, Long> cdFireworkRide = new HashMap<>();
+    int cdFireworkSec = 15;
+    int cdFireworkRideSec = 30;
 
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
@@ -52,12 +61,11 @@ public class GadgetTriggers implements Listener {
                             break;
                         case FIREWORK_CHARGE:
                             event.setCancelled(true);
-                            GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
+                            shootFirework(p);
                             break;
                         case FIREWORK:
                             event.setCancelled(true);
-                            Firework fw = GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
-                            fw.setPassenger(p);
+                            shootFireworkRide(p);
                             break;
                         case RECORD_11:
                             event.setCancelled(true);
@@ -66,6 +74,37 @@ public class GadgetTriggers implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    private void shootFireworkRide(Player p) {
+        if(!cdFireworkRide.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdFireworkRide.get(p.getName()), cdFireworkRideSec)){
+            final Location loc = p.getLocation();
+            Firework fw = GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
+            fw.setPassenger(p);
+            ChatUtils.sendMsgTag(p, "FireworkRide", "&lWHEEE!");
+            final Player pfinal = p;
+            cdFireworkRide.put(p.getName(), System.currentTimeMillis());
+            ScheduleUtils.scheduleTask(100, new Runnable() {
+                @Override
+                public void run() {
+                    pfinal.teleport(loc);
+                }
+            });
+        } else {
+            ChatUtils.sendMsgTag(p, "FireworkRide", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFireworkRide.get(p.getName()), cdFireworkRideSec)) +
+                    " &awachten voordat je dit weer mag gebruiken.");
+        }
+    }
+
+    private void shootFirework(Player p) {
+        if(!cdFirework.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdFirework.get(p.getName()), cdFireworkSec)) {
+            GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
+            ChatUtils.sendMsgTag(p, "Firework", "Je stak een vuurwerkje af! &lWAT EEN MOOI DING.");
+            cdFirework.put(p.getName(), System.currentTimeMillis());
+        } else {
+            ChatUtils.sendMsgTag(p, "Firework", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFirework.get(p.getName()), cdFireworkSec)) +
+                    " &awachten voordat je dit weer mag gebruiken.");
         }
     }
 

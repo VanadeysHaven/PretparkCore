@@ -28,10 +28,7 @@ import me.Cooltimmetje.PretparkCore.Commands.*;
 import me.Cooltimmetje.PretparkCore.Events.GadgetTriggers;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.GadgetUI;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
-import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.*;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
@@ -69,17 +66,12 @@ public class Main extends JavaPlugin {
         getLogger().info("Registering events...");
         /* EVENT START */
             registerEvents(this
-                    , new JoinQuitEvent()
-                    , new InventoryManager()
-                    , new InventoryTriggers()
-                    , new ProfileUI()
-                    , new RideUI()
-                    , new SwagUI()
-                    , new GadgetUI()
-                    , new GadgetTriggers()
-                    , new ResourcePackManager()
-                    , new SignLinkEvent()
-                    , new BlackCobraControl()
+                    , new JoinQuitEvent(), new InventoryManager()
+                    , new InventoryTriggers(), new ProfileUI()
+                    , new RideUI(), new SwagUI()
+                    , new GadgetUI(), new GadgetTriggers()
+                    , new ResourcePackManager(), new SignLinkEvent()
+                    , new BlackCobraControl(), new ControlUI()
         );
         /* EVENT END */
 

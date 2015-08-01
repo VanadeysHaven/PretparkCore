@@ -24,6 +24,7 @@
 
 package me.Cooltimmetje.PretparkCore.Events;
 
+import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ControlUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
@@ -54,6 +55,10 @@ public class InventoryTriggers implements Listener {
                         case MINECART:
                             event.setCancelled(true);
                             RideUI.openUI(p);
+                            break;
+                        case COMMAND_MINECART:
+                            event.setCancelled(true);
+                            ControlUI.openUI(p);
                             break;
                         case CHEST:
                             event.setCancelled(true);
