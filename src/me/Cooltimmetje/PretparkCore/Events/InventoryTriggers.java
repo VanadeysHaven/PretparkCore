@@ -41,8 +41,8 @@ public class InventoryTriggers implements Listener {
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
         Player p = event.getPlayer();
-        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(event.getItem() != null){
+        if(event.getItem() != null){
+            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (event.getItem().hasItemMeta()) {
                     switch (event.getItem().getType()) {
                         default:

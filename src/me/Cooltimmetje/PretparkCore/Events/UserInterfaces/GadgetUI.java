@@ -44,6 +44,7 @@ public class GadgetUI implements Listener {
 
         ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", " \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", inv, 1);
         ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", " \n&3Het zelfde vuurwerkje, maar dan next level! \n&3Probeer het eens uit!", inv, 2);
+//        ItemUtils.createChestDisplay(Material.RECORD_11, 1, 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", inv, 3);
 
         p.openInventory(inv);
     }
@@ -71,6 +72,11 @@ public class GadgetUI implements Listener {
                         ItemUtils.createInventoryDisplay(p, Material.FIREWORK, 1, (byte) 0, "&aGadget &8\u00BB &aVuurwerk Ritje &3(Rechter Klik)",
                                 " \n&3Het zelfde vuurwerkje, maar dan next level! \n&3Probeer het eens uit!", 8);
                         break;
+                    case RECORD_11:
+                        p.closeInventory();
+                        p.getInventory().setHeldItemSlot(7);
+                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
+                        ItemUtils.createInventoryDisplay(p, Material.RECORD_11, 1,(byte) 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", 8);
                 }
             } else {
                 return;

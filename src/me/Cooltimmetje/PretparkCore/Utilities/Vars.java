@@ -48,6 +48,7 @@ public class Vars {
     public static HashMap<Integer, Location> rideLocation = new HashMap<>();
     public static HashMap<Integer, String> rideStatus = new HashMap<>();
     public static HashMap<Integer, Integer> rideSlot = new HashMap<>();
+    public static HashMap<Integer, String> rideLook = new HashMap<>();
 
     /* ARRAY LISTS */
 

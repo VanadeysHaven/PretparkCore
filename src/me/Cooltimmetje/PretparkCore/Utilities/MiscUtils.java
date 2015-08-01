@@ -189,4 +189,14 @@ public class MiscUtils {
                 return 0;
         }
     }
+
+    public static float getYaw(String yawPitch){
+        String[] yawAndPitch = yawPitch.split(",");
+        return Float.parseFloat(yawAndPitch[0]);
+    }
+
+    public static float getPitch(String yawPitch){
+        String[] yawAndPitch = yawPitch.split(",");
+        return Float.parseFloat(yawAndPitch[1]);
+    }
 }

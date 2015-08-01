@@ -24,6 +24,7 @@
 
 package me.Cooltimmetje.PretparkCore.Events;
 
+import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
@@ -57,6 +58,13 @@ public class JoinQuitEvent implements Listener {
         for(Player pl : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.updateScoreboard(pl, false);
         }
+
+        ScheduleUtils.scheduleTask(100, new Runnable() {
+            @Override
+            public void run() {
+                ResourcePackManager.setRP(pfinal);
+            }
+        });
     }
 
     @EventHandler

@@ -33,6 +33,7 @@ import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.ProfileUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.RideUI;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
+import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
 import me.Cooltimmetje.PretparkCore.Timers.DataSaver;
@@ -63,15 +64,16 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Registering events...");
         /* EVENT START */
-            registerEvents(this,
-                    new JoinQuitEvent(),
-                    new InventoryManager(),
-                    new InventoryTriggers(),
-                    new ProfileUI(),
-                    new RideUI(),
-                    new SwagUI(),
-                    new GadgetUI(),
-                    new GadgetTriggers()
+            registerEvents(this
+                    , new JoinQuitEvent()
+                    , new InventoryManager()
+                    , new InventoryTriggers()
+                    , new ProfileUI()
+                    , new RideUI()
+                    , new SwagUI()
+                    , new GadgetUI()
+                    , new GadgetTriggers()
+                    , new ResourcePackManager()
             );
         /* EVENT END */
 
@@ -91,7 +93,9 @@ public class Main extends JavaPlugin {
 
         getLogger().info("Opening API hooks...");
         /* API START */
-//        hookAPI("TitleManager");
+        hookAPI("ResourcePackApi");
+        hookAPI("SignEdit");
+        hookAPI("PCReloader");
         /* API END */
 
         getLogger().info("Setting up...");

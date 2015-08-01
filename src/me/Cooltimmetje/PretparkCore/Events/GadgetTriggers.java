@@ -25,6 +25,10 @@
 package me.Cooltimmetje.PretparkCore.Events;
 
 import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
+import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
+import org.bukkit.Material;
+import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,8 +44,8 @@ public class GadgetTriggers implements Listener {
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
         Player p = event.getPlayer();
-        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(event.getItem() != null){
+        if(event.getItem() != null){
+            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (event.getItem().hasItemMeta()) {
                     switch (event.getItem().getType()) {
                         default:
@@ -55,10 +59,30 @@ public class GadgetTriggers implements Listener {
                             Firework fw = GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
                             fw.setPassenger(p);
                             break;
+                        case RECORD_11:
+                            event.setCancelled(true);
+                            playMusic(p);
+                            break;
                     }
                 }
             }
         }
+    }
+
+    private void playMusic(Player p) {
+        p.getLocation().getBlock().setType(Material.JUKEBOX);
+        final Jukebox jb = (Jukebox) p.getLocation().getBlock().getState();
+        jb.setPlaying(Material.RECORD_11);
+
+        MiscUtils.shootFirework(jb.getLocation().add(0.5,0,0.5), p.getWorld().getName());
+
+        ScheduleUtils.scheduleTask(500, new Runnable() {
+            @Override
+            public void run() {
+                jb.setPlaying(null);
+                jb.getBlock().setType(Material.AIR);
+            }
+        });
     }
 
 }

@@ -98,7 +98,12 @@ public class RideUI implements Listener {
                             String name = Vars.rideName.get(id);
                             p.teleport(loc);
                             p.teleport(p.getLocation().add(0.5, 0, 0.5));
+                            Location pLoc = p.getLocation();
+                            pLoc.setYaw(MiscUtils.getYaw(Vars.rideLook.get(id)));
+                            pLoc.setPitch(MiscUtils.getPitch(Vars.rideLook.get(id)));
+                            p.teleport(pLoc);
                             ChatUtils.sendMsgTag(p, "Teleport", "Je bent geteleporteerd naar de &6" + name + "&a!");
+                            p.getInventory().setHeldItemSlot(2);
                             break;
                         }
                 }

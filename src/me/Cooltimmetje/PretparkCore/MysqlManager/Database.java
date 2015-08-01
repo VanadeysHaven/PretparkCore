@@ -262,6 +262,7 @@ public class Database {
                 Vars.rideLocation.put(rs.getInt("id"), loc);
                 Vars.rideStatus.put(rs.getInt("id"), rs.getString("status"));
                 Vars.rideSlot.put(slot, rs.getInt("id"));
+                Vars.rideLook.put(rs.getInt("id"), rs.getString("yaw_pitch"));
                 slot = slot + 1;
             }
 
