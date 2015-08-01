@@ -24,6 +24,7 @@
 
 package me.Cooltimmetje.PretparkCore.Utilities;
 
+import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -198,5 +199,9 @@ public class MiscUtils {
     public static float getPitch(String yawPitch){
         String[] yawAndPitch = yawPitch.split(",");
         return Float.parseFloat(yawAndPitch[1]);
+    }
+
+    public static String getVar(String varName){
+        return SignLinkEvent.variableValues.get(varName);
     }
 }

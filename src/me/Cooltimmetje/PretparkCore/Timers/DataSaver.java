@@ -25,6 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Timers;
 
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
+import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
@@ -45,8 +46,19 @@ public class DataSaver {
                 for(int i : Vars.rideStatus.keySet()){
                     Database.saveRides(i);
                 }
+                for(String s : SignLinkEvent.variableValues.keySet()){
+                    Database.saveVars(s, SignLinkEvent.variableValues.get(s));
+                }
             }
         });
     }
 
+    public static void saveData(){
+        for(int i : Vars.rideStatus.keySet()){
+            Database.saveRides(i);
+        }
+        for(String s : SignLinkEvent.variableValues.keySet()){
+            Database.saveVars(s, SignLinkEvent.variableValues.get(s));
+        }
+    }
 }

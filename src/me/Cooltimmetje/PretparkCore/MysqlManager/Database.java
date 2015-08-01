@@ -26,6 +26,7 @@ package me.Cooltimmetje.PretparkCore.MysqlManager;
 
 import com.zaxxer.hikari.HikariDataSource;
 import me.Cooltimmetje.PretparkCore.Main;
+import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
@@ -293,4 +294,78 @@ public class Database {
         }
     }
 
+    public static void loadVars(){
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String load = "SELECT * FROM signlink;";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                SignLinkEvent.variableValues.put(rs.getString("variable"), rs.getString("value"));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void saveVars(String var, String value){
+        Connection c = null;
+        PreparedStatement ps = null;
+        String load = "INSERT INTO signlink VALUES (?,?) ON DUPLICATE KEY UPDATE variable=?;";
+
+        try{
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+
+            ps.setString(1, var);
+            ps.setString(2, value);
+            ps.setString(3, var);
+
+            ps.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+   }
 }

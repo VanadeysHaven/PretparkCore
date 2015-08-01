@@ -24,3 +24,7 @@ commands:
         description: changeride
     reloadrides:
         description: reloadrides
+    listvars:
+        description: listvars
+    control:
+        description: control

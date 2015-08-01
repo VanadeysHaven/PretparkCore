@@ -18,7 +18,12 @@
     - To do this you can use the `/coins [player]` command.
     - If you don't specify a player you will be defaulted to yourself.
     - Players that do **NOT** have this permission will always be defaulted to their selves.
-
+- `pretparkcore.controlrides`
+- This permission is _supposed_ to be given to RideOP's and higher.
+  - This permission grants the following things:
+    - Players with this permission will be allowed to use the _Attractie Menu_ sign's.
+    - Players with this permission have access to the `/control` command.
+    
 ## Commands
 > Arguments: (required) [optional]
 
@@ -44,19 +49,26 @@
   - This will take the specified amount of coins from the specified player.
   - Command is **ONLY** available to OPs and has **NO** permission.
 - `/setcoins (player) (amount)`
-   - This will set the specified amount of coins to the specified player.
-   - Command is **ONLY** available to OPs and has **NO** permission.
+  - This will set the specified amount of coins to the specified player.
+  - Command is **ONLY** available to OPs and has **NO** permission.
 - `/listrides`
-   - This command will list all registered rides in the database.
-   - The rides will be showed in this format: `id - name - status - location(x,y,z)`
-   - Command is **ONLY** available to OPs and has **NO** permission.
+  - This command will list all registered rides in the database.
+  - The rides will be showed in this format: `id - name - status - location(x,y,z)`
+  - Command is **ONLY** available to OPs and has **NO** permission.
 - `/changeride (id) (o/d/m)`
-   - This will toggle the status of a ride.
-   - This will **NOT** make it closed in the world. Only for the plugin. **ONLY USE THIS FOR DEBUGGING, CORRECTING OR IN A COMMANDBLOCK THAT IS CONNECTED TO THE OPENING AND CLOSING SQUENCE OF THE RIDE!**
-   - Command is **ONLY** available to OPs and has **NO** permission.
+  - This will toggle the status of a ride.
+  - This will **NOT** make it closed in the world. Only for the plugin. **ONLY USE THIS FOR DEBUGGING, CORRECTING OR IN A COMMANDBLOCK THAT IS CONNECTED TO THE OPENING AND CLOSING SQUENCE OF THE RIDE!**
+  - Command is **ONLY** available to OPs and has **NO** permission.
 - `/reloadrides`
-    - This command will reload all rides from the database.
-    - Command is **ONLY** available to OPs and has **NO** permission.
+  - This command will reload all rides from the database.
+  - Command is **ONLY** available to OPs and has **NO** permission.
+- `/listvars`
+  - This command will show all SignLink variables registered by the plugin.
+    - To have it registered simply update your variable, and it will automagically be registered.
+  - Command is **ONLY** available to OPs and has **NO** permission.
+- `/control (ride)`
+  - This command will show the specified ride's 'remote control'. This will allow RideOP's to actually ride the ride and control it at the same time!
+  - This command requires the `pretparkcore.controlrides` permission node!
 
 
 ## Configuration File

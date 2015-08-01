@@ -35,6 +35,10 @@ import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.SwagUI;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
+import me.Cooltimmetje.PretparkCore.RemoteControl.ControlCommand;
+import me.Cooltimmetje.PretparkCore.RemoteControl.RideControl.BlackCobraControl;
+import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkController;
+import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
 import me.Cooltimmetje.PretparkCore.Timers.DataSaver;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
@@ -74,7 +78,9 @@ public class Main extends JavaPlugin {
                     , new GadgetUI()
                     , new GadgetTriggers()
                     , new ResourcePackManager()
-            );
+                    , new SignLinkEvent()
+                    , new BlackCobraControl()
+        );
         /* EVENT END */
 
         getLogger().info("Registering commands...");
@@ -89,6 +95,8 @@ public class Main extends JavaPlugin {
         getCommand("listrides").setExecutor(new RideCommands());
         getCommand("changeride").setExecutor(new RideCommands());
         getCommand("reloadrides").setExecutor(new RideCommands());
+        getCommand("listvars").setExecutor(new SignLinkEvent());
+        getCommand("control").setExecutor(new ControlCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
@@ -110,6 +118,8 @@ public class Main extends JavaPlugin {
         DataSaver.dataSaver();
         CoinsGiver.coinsGiver();
         Database.loadRides();
+        Database.loadVars();
+        SignLinkController.setup();
         /* SETUP STOP */
 
         getLogger().info("Plugin loading succeeded! The plugin is now ready for use. (Loadtime: " + stopLoad() + "ms)");
@@ -122,6 +132,7 @@ public class Main extends JavaPlugin {
             Database.saveData(p, true);
         }
 
+        DataSaver.saveData();
         plugin = null;
     }
 
