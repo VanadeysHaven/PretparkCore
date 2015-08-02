@@ -28,8 +28,10 @@ import me.Cooltimmetje.PretparkCore.Commands.*;
 import me.Cooltimmetje.PretparkCore.Events.GadgetTriggers;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
+import me.Cooltimmetje.PretparkCore.Events.ServerPingEvent;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.*;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
+import me.Cooltimmetje.PretparkCore.Managers.MaintenanceManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.RemoteControl.ControlCommand;
@@ -72,7 +74,8 @@ public class Main extends JavaPlugin {
                     , new GadgetUI(), new GadgetTriggers()
                     , new ResourcePackManager(), new SignLinkEvent()
                     , new BlackCobraControl(), new ControlUI()
-        );
+                    , new ServerPingEvent()
+            );
         /* EVENT END */
 
         getLogger().info("Registering commands...");
@@ -89,6 +92,7 @@ public class Main extends JavaPlugin {
         getCommand("reloadrides").setExecutor(new RideCommands());
         getCommand("listvars").setExecutor(new SignLinkEvent());
         getCommand("control").setExecutor(new ControlCommand());
+        getCommand("togglem").setExecutor(new MaintenanceCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
@@ -112,6 +116,7 @@ public class Main extends JavaPlugin {
         Database.loadRides();
         Database.loadVars();
         SignLinkController.setup();
+        MaintenanceManager.fix();
         /* SETUP STOP */
 
         getLogger().info("Plugin loading succeeded! The plugin is now ready for use. (Loadtime: " + stopLoad() + "ms)");
@@ -123,6 +128,8 @@ public class Main extends JavaPlugin {
             ScoreboardUtils.destroyScoreboard(p);
             Database.saveData(p, true);
         }
+
+        Vars.saveUp();
 
         DataSaver.saveData();
         plugin = null;

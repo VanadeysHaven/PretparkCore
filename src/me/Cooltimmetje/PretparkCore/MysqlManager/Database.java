@@ -145,7 +145,6 @@ public class Database {
         int up = Vars.globaldata.get("uniqueplayers");
         Vars.globaldata.remove("uniqueplayers");
         Vars.globaldata.put("uniqueplayers", up + 1);
-        Vars.saveUp();
 
         for(Player pl : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.updateScoreboard(pl, false);

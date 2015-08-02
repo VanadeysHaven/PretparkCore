@@ -6,3 +6,4 @@ Database:
     password: SwaggyPasswordOfDoom
 Globaldata:
     uniqueusers: 0
+    server_onderhoud: 0

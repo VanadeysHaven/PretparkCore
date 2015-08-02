@@ -22,45 +22,22 @@
  * SOFTWARE.
  */
 
-package me.Cooltimmetje.PretparkCore.Timers;
+package me.Cooltimmetje.PretparkCore.Managers;
 
-import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
-import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
-import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 29-7-2015 at 14:25 by cooltimmetje.
+ * This class has been created on 2-8-2015 at 14:34 by cooltimmetje.
  */
-public class DataSaver {
+public class MaintenanceManager  {
 
-    public static void dataSaver(){
-        ScheduleUtils.repeatTask(12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    Database.saveData(p, false);
-                }
-                for(int i : Vars.rideStatus.keySet()){
-                    Database.saveRides(i);
-                }
-                for(String s : SignLinkEvent.variableValues.keySet()){
-                    Database.saveVars(s, SignLinkEvent.variableValues.get(s));
-                }
-
-                Vars.saveUp();
-            }
-        });
-    }
-
-    public static void saveData(){
-        for(int i : Vars.rideStatus.keySet()){
-            Database.saveRides(i);
-        }
-        for(String s : SignLinkEvent.variableValues.keySet()){
-            Database.saveVars(s, SignLinkEvent.variableValues.get(s));
+    public static void fix(){
+        if(Vars.globaldata.get("onderhoud") == 1){
+            Bukkit.getServer().setWhitelist(true);
+        } else {
+            Bukkit.getServer().setWhitelist(false);
         }
     }
+
 }

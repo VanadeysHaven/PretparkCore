@@ -22,45 +22,39 @@
  * SOFTWARE.
  */
 
-package me.Cooltimmetje.PretparkCore.Timers;
+package me.Cooltimmetje.PretparkCore.Events;
 
-import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
-import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
-import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.ServerListPingEvent;
+
+import java.io.File;
 
 /**
- * This class has been created on 29-7-2015 at 14:25 by cooltimmetje.
+ * This class has been created on 2-8-2015 at 14:08 by cooltimmetje.
  */
-public class DataSaver {
+public class ServerPingEvent implements Listener {
 
-    public static void dataSaver(){
-        ScheduleUtils.repeatTask(12000, 12000, new Runnable() {
-            @Override
-            public void run() {
-                for(Player p : Bukkit.getOnlinePlayers()){
-                    Database.saveData(p, false);
-                }
-                for(int i : Vars.rideStatus.keySet()){
-                    Database.saveRides(i);
-                }
-                for(String s : SignLinkEvent.variableValues.keySet()){
-                    Database.saveVars(s, SignLinkEvent.variableValues.get(s));
-                }
-
-                Vars.saveUp();
+    @EventHandler
+    public void onPing(ServerListPingEvent event){
+        if(Vars.globaldata.get("onderhoud") == 1){
+            event.setMotd(MiscUtils.color(Vars.MOTD + "&c&lONDERHOUD!"));
+            try {
+                event.setServerIcon(Bukkit.loadServerIcon(new File("closed.png")));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+        } else {
+            event.setMotd(MiscUtils.color(Vars.MOTD + "&a&lKOEKJES!")); //TODO MAKE RANDOM MOTD.
+            try {
+                event.setServerIcon(Bukkit.loadServerIcon(new File("open.png")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    public static void saveData(){
-        for(int i : Vars.rideStatus.keySet()){
-            Database.saveRides(i);
-        }
-        for(String s : SignLinkEvent.variableValues.keySet()){
-            Database.saveVars(s, SignLinkEvent.variableValues.get(s));
-        }
-    }
 }

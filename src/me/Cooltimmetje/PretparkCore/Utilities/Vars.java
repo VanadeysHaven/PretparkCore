@@ -34,7 +34,8 @@ import java.util.HashMap;
  */
 public class Vars {
 
-    public static String PRETPARK_NAAM = MiscUtils.color("&2&lPingFinity");
+    public static String PRETPARK_NAAM = MiscUtils.color("&a&lSoonTM");
+    public static String MOTD = MiscUtils.color(Vars.PRETPARK_NAAM + " &8\u00BB &aBinnenkort... \n");
 
     public static int COIN_GAIN = 30;
     public static int COIN_TIME = 60; //in minutes
@@ -54,10 +55,16 @@ public class Vars {
 
     public static void setGlobaldata(){
         globaldata.put("uniqueplayers", Main.getPlugin().getConfig().getInt("Globaldata.uniqueusers"));
+        globaldata.put("onderhoud", Main.getPlugin().getConfig().getInt("Globaldata.server_onderhoud"));
     }
 
     public static void saveUp(){
         Main.getPlugin().getConfig().set("Globaldata.uniqueusers", globaldata.get("uniqueplayers"));
+        Main.getPlugin().saveConfig();
+    }
+
+    public static void saveSo(){
+        Main.getPlugin().getConfig().set("Globaldata.server_onderhoud", globaldata.get("onderhoud"));
         Main.getPlugin().saveConfig();
     }
 }

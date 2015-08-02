@@ -28,3 +28,5 @@ commands:
         description: listvars
     control:
         description: control
+    togglem:
+        description: togglem
