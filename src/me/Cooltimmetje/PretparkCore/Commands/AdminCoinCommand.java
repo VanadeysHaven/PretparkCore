@@ -68,7 +68,26 @@ public class AdminCoinCommand implements CommandExecutor {
                     ChatUtils.sendMsgTag(p, "GiveCoins", ChatUtils.error + "Je mag dit niet doen!");
                 }
             } else {
-                Main.getPlugin().getLogger().warning("This command can only be executed by a player!");
+                if (args.length >= 2) {
+                    Player target = Bukkit.getPlayer(args[0]);
+                    if (target != null) {
+                        if (MiscUtils.isInt(args[1])) {
+                            int amount = Integer.parseInt(args[1]);
+                            if(amount > 0){
+                                sender.sendMessage("Je hebt " + amount + " coins aan " + target.getDisplayName() + " gegeven!");
+                                PlayerUtils.addCoins(target, amount, "Gekregen van de console.");
+                            } else {
+                                sender.sendMessage("Je kan alleen 1 coin of meer geven!");
+                            }
+                        } else {
+                            sender.sendMessage("Zorg er voor dat het 2e argument een nummer is!");
+                        }
+                    } else {
+                        sender.sendMessage("Deze speler bestaat niet of is niet online!");
+                    }
+                } else {
+                    sender.sendMessage("Niet genoeg argumenten! Gebruik deze command zo: /givecoins <player> <hoeveelheid>");
+                }
             }
         } else if (cmd.getName().equalsIgnoreCase("masscoins")) {
             if (sender instanceof Player) {
