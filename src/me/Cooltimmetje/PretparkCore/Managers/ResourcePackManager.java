@@ -26,28 +26,54 @@ package me.Cooltimmetje.PretparkCore.Managers;
 
 import de.inventivegames.rpapi.ResourcePackStatusEvent;
 import de.inventivegames.rpapi.Status;
+import me.Cooltimmetje.PretparkCore.Main;
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.HashMap;
 
 /**
  * This class has been created on 31-7-2015 at 17:52 by cooltimmetje.
  */
-public class ResourcePackManager implements Listener{
+public class ResourcePackManager implements Listener {
 
-    public static void setRP(Player p){
+    static HashMap<String, BukkitTask> tasks = new HashMap<>();
+
+    public static void setRP(Player p) {
         ChatUtils.sendMsgTag(p, "ResourcePack", "ResourcePack versturen... Druk op &lJA &aals er om een bevestiging word gevraagd!");
         p.setResourcePack("https://www.dropbox.com/s/cs15399fk8d35sy/PingFinity.zip?dl=1");
+
+        startConfirmTimer(p);
     }
+
+    private static void startConfirmTimer(final Player p) {
+        BukkitTask task = Bukkit.getServer().getScheduler().runTaskLater(Main.getPlugin(), new Runnable() {
+            @Override
+            public void run() {
+                p.kickPlayer(MiscUtils.color("&9ResourcePacks> &aWe hebben geen bevestiging ontvangen, probeer het nog eens! Of ga naar deze link voor meer informatie: [TODO]"));
+            }
+        }, 400);
+        tasks.put(p.getName(), task);
+    }
+
+
 
     @EventHandler
     public void onResourcePackStatus(ResourcePackStatusEvent event){
         Player p = event.getPlayer();
         final Player pfinal = event.getPlayer();
         Status status = event.getStatus();
+
+        if(tasks.containsKey(p.getName())){
+            tasks.get(p.getName()).cancel();
+        }
+
         if(status == Status.ACCEPTED){
             ChatUtils.sendMsgTag(p, "ResourcePack", "Bevestiging ontvangen! De download start nu!");
         } else if(status == Status.DECLINED){

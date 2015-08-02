@@ -26,6 +26,7 @@ package me.Cooltimmetje.PretparkCore.Events;
 
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
+import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
@@ -58,6 +59,9 @@ public class JoinQuitEvent implements Listener {
         for(Player pl : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.updateScoreboard(pl, false);
         }
+
+        ChatUtils.sendMsgTag(p, "ResourcePack", "Over 5 seconden gaan we de ResourcePack naar je sturen... Druk op &lJA &aals er om een bevestiging word gevraagd! " +
+                "&a&nAls je op nee drukt krijg je een kick!");
 
         ScheduleUtils.scheduleTask(100, new Runnable() {
             @Override
