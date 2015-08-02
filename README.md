@@ -19,11 +19,14 @@
     - If you don't specify a player you will be defaulted to yourself.
     - Players that do **NOT** have this permission will always be defaulted to their selves.
 - `pretparkcore.controlrides`
-- This permission is _supposed_ to be given to RideOP's and higher.
+  - This permission is _supposed_ to be given to RideOP's and higher.
   - This permission grants the following things:
     - Players with this permission will be allowed to use the _Attractie Menu_ sign's.
     - Players with this permission have access to the `/control` command.
     - Players with this permission will get another item in their hotbar to control rides.
+- `pretparkcore.staffbepunch`
+  - This permission is _supposed_ to be given to all members's of staff.
+  - Player with this permission can be punched by players with the gadget.
     
 ## Commands
 > Arguments: (required) [optional]

@@ -24,19 +24,24 @@
 
 package me.Cooltimmetje.PretparkCore.Events;
 
+import com.darkblade12.particleeffect.ParticleEffect;
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 
@@ -49,6 +54,10 @@ public class GadgetTriggers implements Listener {
     HashMap<String, Long> cdFireworkRide = new HashMap<>();
     int cdFireworkSec = 15;
     int cdFireworkRideSec = 30;
+
+    HashMap<String, Long> cdPunch = new HashMap<>();
+    HashMap<String, Long> cdPunchStaff = new HashMap<>();
+    int cdPunchSec = 60;
 
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
@@ -74,6 +83,45 @@ public class GadgetTriggers implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    @SuppressWarnings("all")
+    public void onRightClick(PlayerInteractEntityEvent event){
+        if(event.getPlayer().getItemInHand() != null){
+            if(event.getPlayer().getItemInHand().getType() == Material.PISTON_STICKY_BASE){
+                Player p = event.getPlayer();
+                if(event.getRightClicked() instanceof Player){
+                    Player target = (Player) event.getRightClicked();
+                    if(target.hasPermission("pretparkcore.staffbepunch")){
+                        if(!cdPunch.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdPunch.get(p.getName()), cdPunchSec)){
+                            if(!cdPunchStaff.containsKey(target.getName()) || MiscUtils.cooldownCheck(cdPunchStaff.get(target.getName()), cdPunchSec)){
+                                ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 47, target.getLocation(), 16);
+                                Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 100, 1);
+                                target.setFlying(false);
+                                target.setVelocity(new Vector(0, 3, 0));
+                                cdPunch.put(p.getName(), System.currentTimeMillis());
+                                cdPunchStaff.put(target.getName(), System.currentTimeMillis());
+                            } else {
+                                ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunchStaff.get(p.getName()), cdPunchSec)) +
+                                        " &awachten voordat&c" + target.getName() + "&aje weer kan punchen!");
+                            }
+                        } else {
+                            ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunch.get(p.getName()), cdPunchSec)) +
+                                    " &awachten voordat je dit weer mag gebruiken.");
+                        }
+                    } else {
+                        ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
+                    }
+                } else {
+                    ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
+                }
+            } else {
+                return;
+            }
+        } else {
+            return;
         }
     }
 

@@ -46,6 +46,8 @@ public class GadgetUI implements Listener {
         ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
                 "\n&3Probeer het eens uit!'\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
                 "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!", inv, 2);
+        ItemUtils.createChestDisplay(Material.PISTON_STICKY_BASE, 1, 0, "&aStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
+                "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!", inv, 3);
 //        ItemUtils.createChestDisplay(Material.RECORD_11, 1, 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", inv, 3);
 
         p.openInventory(inv);
@@ -80,7 +82,15 @@ public class GadgetUI implements Listener {
                         p.closeInventory();
                         p.getInventory().setHeldItemSlot(7);
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
-                        ItemUtils.createInventoryDisplay(p, Material.RECORD_11, 1,(byte) 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", 8);
+                        ItemUtils.createInventoryDisplay(p, Material.RECORD_11, 1,(byte) 0, "&aGadget &8\u00BB &a'Very Grown Up' muziek &3(Rechter Klik)", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", 8);
+                        break;
+                    case PISTON_STICKY_BASE:
+                        p.closeInventory();
+                        p.getInventory().setHeldItemSlot(7);
+                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
+                        ItemUtils.createInventoryDisplay(p, Material.PISTON_STICKY_BASE, 1, (byte) 0, "&aGadget &8\u00BB &aStaff Launcher &3(Rechter Klik)", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
+                                "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!", 8);
+                        break;
                 }
             } else {
                 return;
