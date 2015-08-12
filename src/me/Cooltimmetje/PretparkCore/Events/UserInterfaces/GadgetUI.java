@@ -42,13 +42,32 @@ public class GadgetUI implements Listener {
     public static void openUI(Player p){
         Inventory inv = Bukkit.createInventory(null, 54, "Gadgets");
 
-        ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", inv, 1);
-        ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
-                "\n&3Probeer het eens uit!'\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
-                "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!", inv, 2);
-        ItemUtils.createChestDisplay(Material.PISTON_STICKY_BASE, 1, 0, "&aStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
-                "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!", inv, 3);
+        if(p.hasPermission("pretparkcore.gadget.firework")){
+            ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!\n " +
+                    "\n&aUNLOCKED", inv, 1);
+        } else {
+            ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, "&cVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! " +
+                    "\n&3&lWAT EEN MOOI DING!\n \n&cLOCKED", inv, 1);
+        }
+        if(p.hasPermission("pretparkcore.gadget.fireworkride")){
+            ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
+                    "\n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
+                    "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!\n \n&aUNLOCKED", inv, 2);
+        } else {
+            ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, "&cVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
+                    "\n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
+                    "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!\n \n&cLOCKED", inv, 2);
+        }
+        if(p.hasPermission("pretparkcore.gadget.stafflaunch")){
+            ItemUtils.createChestDisplay(Material.PISTON_STICKY_BASE, 1, 0, "&aStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
+                    "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!\n \n&aUNLOCKED", inv, 3);
+        } else {
+            ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, "&cStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
+                    "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!\n \n&cLOCKED", inv, 3);
+        }
 //        ItemUtils.createChestDisplay(Material.RECORD_11, 1, 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", inv, 3);
+
+
 
         p.openInventory(inv);
     }
@@ -92,6 +111,8 @@ public class GadgetUI implements Listener {
                                 "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!", 8);
                         break;
                 }
+
+
             } else {
                 return;
             }

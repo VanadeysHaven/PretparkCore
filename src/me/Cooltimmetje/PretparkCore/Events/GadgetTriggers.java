@@ -52,9 +52,9 @@ import java.util.HashMap;
  */
 public class GadgetTriggers implements Listener {
 
-    HashMap<String, Long> cdFirework = new HashMap<>();
+    static HashMap<String, Long> cdFirework = new HashMap<>();
     HashMap<String, Long> cdFireworkRide = new HashMap<>();
-    int cdFireworkSec = 15;
+    static int cdFireworkSec = 15;
     int cdFireworkRideSec = 30;
 
     HashMap<String, Long> cdPunch = new HashMap<>();
@@ -160,7 +160,7 @@ public class GadgetTriggers implements Listener {
         }
     }
 
-    private void shootFirework(Player p) {
+    public static void shootFirework(Player p) {
         if(!cdFirework.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdFirework.get(p.getName()), cdFireworkSec)) {
             GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
             ChatUtils.sendMsgTag(p, "Firework", "Je stak een vuurwerkje af! &lWAT EEN MOOI DING.");

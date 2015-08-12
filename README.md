@@ -68,7 +68,7 @@
   - Command is **ONLY** available to OPs and has **NO** permission.
 - `/listvars`
   - This command will show all SignLink variables registered by the plugin.
-    - To have it registered simply update your variable, and it will automagically be registered.
+    - Only vars that are linked to a ride in the code are registered and logged.
   - Command is **ONLY** available to OPs and has **NO** permission.
 - `/control (ride)`
   - This command will show the specified ride's 'remote control'. This will allow RideOP's to actually ride the ride and control it at the same time!

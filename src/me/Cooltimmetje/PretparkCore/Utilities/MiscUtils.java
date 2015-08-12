@@ -224,4 +224,8 @@ public class MiscUtils {
         }
         return minutes + "m" + seconds + "s";
     }
+
+    public static Location getLocation(String world, int x, int y, int z){
+        return Bukkit.getWorld(world).getBlockAt(x, y, z).getLocation();
+    }
 }

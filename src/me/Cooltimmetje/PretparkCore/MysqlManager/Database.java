@@ -45,7 +45,7 @@ import java.sql.SQLException;
  */
 public class Database {
 
-    public static HikariDataSource hikari = null;
+    private static HikariDataSource hikari = null;
 
     public static void connectToDatabase(){
         hikari = new HikariDataSource();
