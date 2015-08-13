@@ -32,6 +32,7 @@ import me.Cooltimmetje.PretparkCore.Events.ServerPingEvent;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.*;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
 import me.Cooltimmetje.PretparkCore.Managers.MaintenanceManager;
+import me.Cooltimmetje.PretparkCore.Managers.NpcManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.RemoteControl.ControlCommand;
@@ -74,7 +75,7 @@ public class Main extends JavaPlugin {
                     , new GadgetUI(), new GadgetTriggers()
                     , new ResourcePackManager(), new SignLinkEvent()
                     , new BlackCobraControl(), new ControlUI()
-                    , new ServerPingEvent()
+                    , new ServerPingEvent(), new NpcManager()
             );
         /* EVENT END */
 
@@ -100,6 +101,8 @@ public class Main extends JavaPlugin {
         hookAPI("ResourcePackApi");
         hookAPI("SignEdit");
         hookAPI("PCReloader");
+        hookAPI("HolographicDisplays");
+        hookAPI("Citizens");
         /* API END */
 
         getLogger().info("Setting up...");
@@ -117,6 +120,7 @@ public class Main extends JavaPlugin {
         Database.loadVars();
         SignLinkController.setup();
         MaintenanceManager.fix();
+        NpcManager.spawnNPCs();
         /* SETUP STOP */
 
         getLogger().info("Plugin loading succeeded! The plugin is now ready for use. (Loadtime: " + stopLoad() + "ms)");
@@ -128,6 +132,7 @@ public class Main extends JavaPlugin {
             ScoreboardUtils.destroyScoreboard(p);
             Database.saveData(p, true);
         }
+        NpcManager.removeNPCs();
 
         Vars.saveUp();
 

@@ -49,7 +49,7 @@ public class SignLinkEvent implements Listener,CommandExecutor {
         String name = event.getVariable().getName();
         String value = event.getNewValue();
 
-        if(!name.equalsIgnoreCase("time") && !name.equalsIgnoreCase("tps")){
+        if(blackCobraSignLink.contains(name)){
             variableValues.put(name, value);
         }
 
