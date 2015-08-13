@@ -27,14 +27,9 @@ package me.Cooltimmetje.PretparkCore.Managers;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import me.Cooltimmetje.PretparkCore.Main;
-import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.ItemUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
-import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.NPC;
-import net.citizensnpcs.api.npc.NPCRegistry;
+import me.Cooltimmetje.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -50,7 +45,6 @@ import java.util.ArrayList;
  */
 public class NpcManager implements Listener {
 
-    static NPCRegistry registery = CitizensAPI.getNPCRegistry();
     static String world = "world";
     static Entity gadgetEntity;
 
@@ -58,52 +52,36 @@ public class NpcManager implements Listener {
     static int FIREWORKRIDE_COST = 200;
     static int STAFFPUNCH_COST = 300;
 
-    static ArrayList<NPC> npcs = new ArrayList<>();
+    static ArrayList<Entity> entitys = new ArrayList<>();
     static ArrayList<Hologram> holograms = new ArrayList<>();
 
     public static void spawnNPCs(){
-        NPC pet = registery.createNPC(EntityType.VILLAGER, "");
-        NPC merchant = registery.createNPC(EntityType.VILLAGER, "");
-        NPC gadget = registery.createNPC(EntityType.VILLAGER, "");
+        Entity pet = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1249, 55, 242, -120, 0).add(0.5, 0, 0.5), EntityType.VILLAGER);
+        EntityUtils.noAI(pet);
+        entitys.add(pet);
 
-        pet.spawn(MiscUtils.getLocation(world, -1249, 55, 242).add(0.5, 0, 0.5));
-        pet.faceLocation(MiscUtils.getLocation(world, -1247, 56, 241).add(0.5, 0, 0.5));
-
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "npc select " + pet.getId());
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "npc sound -n -n -n");
-
-        merchant.spawn(MiscUtils.getLocation(world, -1249, 55, 240).add(0.5, 0, 0.5));
-        merchant.faceLocation(MiscUtils.getLocation(world, -1247, 56, 240).add(0.5, 0, 0.5));
-
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "npc select " + merchant.getId());
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "npc sound -n -n -n");
-
-        gadget.spawn(MiscUtils.getLocation(world, -1249, 55, 238).add(0.5, 0, 0.5));
-        gadget.faceLocation(MiscUtils.getLocation(world, -1247, 56, 239).add(0.5, 0, 0.5));
-
-        gadgetEntity = gadget.getEntity();
-
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "npc select " + gadget.getId());
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "npc sound -n -n -n");
-
-        npcs.add(pet);
-        npcs.add(merchant);
-        npcs.add(gadget);
-
-        Hologram petHolo = HologramsAPI.createHologram(Main.getPlugin(), pet.getEntity().getLocation().add(0, 2.6, 0));
+        Hologram petHolo = HologramsAPI.createHologram(Main.getPlugin(), pet.getLocation().add(0, 2.6, 0));
         petHolo.appendTextLine(MiscUtils.color("&bPet Shop"));
         petHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
+        holograms.add(petHolo);
 
-        Hologram merchantHolo = HologramsAPI.createHologram(Main.getPlugin(), merchant.getEntity().getLocation().add(0, 2.6, 0));
+        Entity merchant = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1249, 55, 240, -90, 0).add(0.5, 0, 0.5), EntityType.VILLAGER);
+        EntityUtils.noAI(merchant);
+        entitys.add(merchant);
+
+        Hologram merchantHolo = HologramsAPI.createHologram(Main.getPlugin(), merchant.getLocation().add(0, 2.6, 0));
         merchantHolo.appendTextLine(MiscUtils.color("&bKleding Shop"));
         merchantHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
+        holograms.add(merchantHolo);
 
-        Hologram gadgetHolo = HologramsAPI.createHologram(Main.getPlugin(), gadget.getEntity().getLocation().add(0, 2.6, 0));
+        Entity gadget = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1249, 55, 238, -50, 0).add(0.5,0,0.5), EntityType.VILLAGER);
+        gadgetEntity = gadget;
+        EntityUtils.noAI(gadget);
+        entitys.add(gadget);
+
+        Hologram gadgetHolo = HologramsAPI.createHologram(Main.getPlugin(), gadget.getLocation().add(0, 2.6, 0));
         gadgetHolo.appendTextLine(MiscUtils.color("&bGadget Shop"));
         gadgetHolo.appendTextLine(MiscUtils.color("&a&lRIGHT CLICK"));
-
-        holograms.add(petHolo);
-        holograms.add(merchantHolo);
         holograms.add(gadgetHolo);
     }
 
@@ -111,8 +89,8 @@ public class NpcManager implements Listener {
         for(Hologram hologram : holograms){
             hologram.delete();
         }
-        for(NPC npc : npcs){
-            npc.destroy();
+        for(Entity entity : entitys){
+            entity.remove();
         }
     }
 
