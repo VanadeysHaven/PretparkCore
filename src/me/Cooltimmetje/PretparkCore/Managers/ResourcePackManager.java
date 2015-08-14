@@ -34,6 +34,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
@@ -46,7 +47,9 @@ public class ResourcePackManager implements Listener {
     static HashMap<String, BukkitTask> tasks = new HashMap<>();
 
     public static void setRP(Player p) {
+        p.sendMessage("");
         ChatUtils.sendMsgTag(p, "ResourcePack", "ResourcePack versturen... Druk op &lJA &aals er om een bevestiging word gevraagd!");
+        p.sendMessage("");
         p.setResourcePack("https://www.dropbox.com/s/cs15399fk8d35sy/PingFinity.zip?dl=1");
 
         startConfirmTimer(p);
@@ -75,11 +78,16 @@ public class ResourcePackManager implements Listener {
         }
 
         if(status == Status.ACCEPTED){
+            p.sendMessage("");
             ChatUtils.sendMsgTag(p, "ResourcePack", "Bevestiging ontvangen! De download start nu!");
+            p.sendMessage("");
         } else if(status == Status.DECLINED){
+            p.sendMessage("");
             ChatUtils.sendMsgTag(p, "ResourcePack", ChatUtils.error + "Je hebt de ResourcePack niet geaccepteerd, je moet dit doen om te kunnen spelen! " +
                     "Klik op de volgende link voor meer informatie: [TODO]");
+            p.sendMessage("");
             ChatUtils.sendMsgTag(p, "ResourcePack", ChatUtils.error + "Je zal over 10 seconden gekickt worden!");
+            p.sendMessage("");
             ScheduleUtils.scheduleTask(200, new Runnable() {
                 @Override
                 public void run() {
@@ -88,9 +96,20 @@ public class ResourcePackManager implements Listener {
                 }
             });
         } else if(status == Status.SUCCESSFULLY_LOADED){
+            for(int i = 0; i < 100; i++) {
+                p.sendMessage("");
+            }
+            ChatManager.joinDisable.remove(p);
+            p.removePotionEffect(PotionEffectType.SLOW);
+            p.removePotionEffect(PotionEffectType.JUMP);
+            p.removePotionEffect(PotionEffectType.BLINDNESS);
             ChatUtils.sendMsgTag(p, "ResourcePack", "Download geslaagd! Applausje voor je zelf! ^.^ &lVeel plezier!");
+            ChatUtils.sendMsgTag(p, "Chat", "&lJe kunt nu chatten!");
+            p.sendMessage("");
         } else if(status == Status.FAILED_DOWNLOAD){
+            p.sendMessage("");
             ChatUtils.sendMsgTag(p, "ResourcePack", ChatUtils.error + "Oeps! Er ging iets mis, we gaan je over 10 seconden kicken, daarna kun je opnieuw joinen om het nog eens te proberen!");
+            p.sendMessage("");
             ScheduleUtils.scheduleTask(200, new Runnable() {
                 @Override
                 public void run() {

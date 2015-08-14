@@ -77,6 +77,7 @@ public class Main extends JavaPlugin {
                     , new ResourcePackManager(), new SignLinkEvent()
                     , new BlackCobraControl(), new ControlUI()
                     , new ServerPingEvent(), new NpcManager()
+                    , new ChatManager()
             );
         /* EVENT END */
 
