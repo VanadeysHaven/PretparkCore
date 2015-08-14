@@ -66,7 +66,9 @@ public class NpcManager implements Listener {
         petHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
         holograms.add(petHolo);
 
-        Entity merchant = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1249, 55, 240, -90, 0).add(0.5, 0, 0.5), EntityType.VILLAGER);
+        Entity merchant = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1197, 54, 59, -15, 0).add(0.5, 0, 0.5), EntityType.PLAYER);
+        merchant.setCustomName("Cooltimmetje");
+        merchant.setCustomNameVisible(false);
         EntityUtils.noAI(merchant);
         entitys.add(merchant);
 
