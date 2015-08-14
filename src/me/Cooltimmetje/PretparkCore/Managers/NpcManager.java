@@ -84,6 +84,15 @@ public class NpcManager implements Listener {
         gadgetHolo.appendTextLine(MiscUtils.color("&bGadget Shop"));
         gadgetHolo.appendTextLine(MiscUtils.color("&a&lRIGHT CLICK"));
         holograms.add(gadgetHolo);
+
+        Entity food = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1184, 54, 60, -180, 0).add(0.5,0,0.5), EntityType.VILLAGER);
+        EntityUtils.noAI(food);
+        entitys.add(food);
+
+        Hologram foodHolo = HologramsAPI.createHologram(Main.getPlugin(), gadget.getLocation().add(0, 2.6, 0));
+        foodHolo.appendTextLine(MiscUtils.color("&bCocktail Bar"));
+        foodHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
+        holograms.add(foodHolo);
     }
 
     public static void removeNPCs(){
