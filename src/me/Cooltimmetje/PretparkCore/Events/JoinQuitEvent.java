@@ -24,6 +24,7 @@
 
 package me.Cooltimmetje.PretparkCore.Events;
 
+import me.Cooltimmetje.PretparkCore.Managers.ChatManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
@@ -36,6 +37,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * This class has been created on 28-7-2015 at 19:33 by cooltimmetje.
@@ -60,10 +63,30 @@ public class JoinQuitEvent implements Listener {
             ScoreboardUtils.updateScoreboard(pl, false);
         }
 
-        ChatUtils.sendMsgTag(p, "ResourcePack", "Over 5 seconden gaan we de ResourcePack naar je sturen... Druk op &lJA &aals er om een bevestiging word gevraagd! " +
-                "&a&nAls je op nee drukt krijg je een kick!");
 
-        ScheduleUtils.scheduleTask(100, new Runnable() {
+
+
+
+        ScheduleUtils.scheduleTask(20, new Runnable() {
+            @Override
+            public void run() {
+                ChatManager.joinDisable.add(pfinal);
+                pfinal.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 255, false, false));
+                pfinal.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 127, false, false));
+                pfinal.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 129, false, false));
+
+                for(int i=0; i < 100; i ++)
+                {
+                    pfinal.sendMessage("");
+                }
+
+                ChatUtils.sendMsgTag(pfinal, "ResourcePack", "Over 5 seconden gaan we de ResourcePack naar je sturen... Druk op &lJA &aals er om een bevestiging word gevraagd! " +
+                        "&a&nAls je op nee drukt krijg je een kick!");
+                pfinal.sendMessage("");
+            }
+        });
+
+        ScheduleUtils.scheduleTask(120, new Runnable() {
             @Override
             public void run() {
                 ResourcePackManager.setRP(pfinal);
