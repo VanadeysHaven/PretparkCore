@@ -100,6 +100,7 @@ public class NpcManager implements Listener {
         Entity e = event.getRightClicked();
         if((e instanceof Villager) && !(e instanceof Minecart)){
             if(e == gadgetEntity){
+                event.setCancelled(true);
                 openGadget(p);
             }
         }
@@ -108,31 +109,36 @@ public class NpcManager implements Listener {
     private void openGadget(Player p) {
         Inventory inv = Bukkit.createInventory(null, 54, "Gadget Shop");
 
-        if(p.hasPermission("pretparkcore.gadget.firework")){
-            ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!\n " +
-                    "\n&aUNLOCKED", inv, 1);
-        } else {
-            ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&cVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! " +
-                    "\n&3&lWAT EEN MOOI DING!\n \n&cLOCKED &8\u00BB &aKlik om te kopen.\n" +
-                    "&3Dit kost: &6" + FIREWORK_COST + " coins", inv, 1);
-        }
-        if(p.hasPermission("pretparkcore.gadget.fireworkride")){
-            ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
-                    "\n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
-                    "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!\n \n&aUNLOCKED", inv, 2);
-        } else {
-            ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&cVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
-                    "\n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
-                    "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!\n \n&cLOCKED &8\u00BB &aKlik om te kopen. \n" +
-                    "&3Dit kost: &6" + FIREWORKRIDE_COST + " coins", inv, 2);
-        }
-        if(p.hasPermission("pretparkcore.gadget.stafflaunch")){
-            ItemUtils.createChestDisplay(Material.PISTON_STICKY_BASE, 1, 0, "&aStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
-                    "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!\n \n&aUNLOCKED", inv, 3);
-        } else {
-            ItemUtils.createChestDisplay(Material.PISTON_STICKY_BASE, 1, 0, "&cStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
-                    "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!\n \n&cLOCKED &8\u00BB &aKlik om te kopen.\n" +
-                    "&3Dit kost: &6" + STAFFPUNCH_COST + " coins", inv, 3);
+        int slot = 1;
+        for(Material m : GadgetManager.name.keySet()){
+            String name,lore;
+            boolean hasPerm = p.hasPermission(GadgetManager.permission.get(m));
+
+            StringBuilder nameSb = new StringBuilder();
+            if(hasPerm){
+                nameSb.append("&a");
+            } else {
+                nameSb.append("&c");
+            }
+            name = nameSb.append(GadgetManager.name.get(m)).toString().trim();
+
+            String[] loreArray = GadgetManager.lore.get(m);
+            StringBuilder loreSb = new StringBuilder();
+            loreSb.append("&3COOLDOWN: &b").append(GadgetManager.cooldown.get(m)).append(" seconden \n \n");
+            for (String aLoreArray : loreArray) {
+                loreSb.append(aLoreArray).append("\n");
+            }
+            loreSb.append(" \n");
+            if(hasPerm){
+                loreSb.append("&aUNLOCKED");
+            } else {
+                loreSb.append("&cLOCKED &8\u00BB &aKlik om te kopen.");
+                loreSb.append("&3Dit kost: &6").append(GadgetManager.cost.get(m));
+            }
+            lore = loreSb.toString().trim();
+
+            ItemUtils.createChestDisplay(m, 1, 0, name, lore, inv, slot);
+            slot = slot + 1;
         }
 
         p.openInventory(inv);
@@ -145,50 +151,18 @@ public class NpcManager implements Listener {
             Player p = (Player) event.getWhoClicked();
             event.setCancelled(true);
             if(event.getCurrentItem().hasItemMeta()) {
-                switch (event.getCurrentItem().getType()) {
-                    default:
-                        break;
-                    case FIREWORK_CHARGE:
-                        if (p.hasPermission("pretparkcore.gadget.firework")) {
-                            ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt dit al gekocht!");
-                        } else {
-                            if (PlayerUtils.getCoins(p) >= FIREWORK_COST) {
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + p.getName() + " pretparkcore.gadget.firework");
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
-                                PlayerUtils.takeCoins(p, FIREWORK_COST, "je hebt een gadget gekocht!");
-                                openGadget(p);
-                            } else {
-                                ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt niet genoeg coins!");
-                            }
-                        }
-                        break;
-                    case FIREWORK:
-                        if (p.hasPermission("pretparkcore.gadget.fireworkride")) {
-                            ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt dit al gekocht!");
-                        } else {
-                            if (PlayerUtils.getCoins(p) >= FIREWORKRIDE_COST) {
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + p.getName() + " pretparkcore.gadget.firework");
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
-                                PlayerUtils.takeCoins(p, FIREWORKRIDE_COST, "je hebt een gadget gekocht!");
-                                openGadget(p);
-                            } else {
-                                ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt niet genoeg coins!");
-                            }
-                        }
-                        break;
-                    case PISTON_STICKY_BASE:
-                        if (p.hasPermission("pretparkcore.gadget.fireworkride")) {
-                            ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt dit al gekocht!");
-                        } else {
-                            if (PlayerUtils.getCoins(p) >= STAFFPUNCH_COST) {
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + p.getName() + " pretparkcore.gadget.stafflaunch");
-                                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
-                                PlayerUtils.takeCoins(p, STAFFPUNCH_COST, "je hebt een gadget gekocht!");
-                                openGadget(p);
-                            } else {
-                                ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt niet genoeg coins!");
-                            }
-                        }
+                Material m = event.getCurrentItem().getType();
+                if (p.hasPermission(GadgetManager.permission.get(m))) {
+                    ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt dit al gekocht!");
+                } else {
+                    if (PlayerUtils.getCoins(p) >= GadgetManager.cost.get(m)) {
+                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + p.getName() + " " + GadgetManager.permission.get(m));
+                        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "mansave");
+                        PlayerUtils.takeCoins(p, GadgetManager.cost.get(m), "je hebt een gadget gekocht!");
+                        openGadget(p);
+                    } else {
+                        ChatUtils.sendMsgTag(p, "GadgetShop", ChatUtils.error + "Je hebt niet genoeg coins!");
+                    }
                 }
             } else {
                 return;

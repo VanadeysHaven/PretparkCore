@@ -30,10 +30,7 @@ import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
 import me.Cooltimmetje.PretparkCore.Events.JoinQuitEvent;
 import me.Cooltimmetje.PretparkCore.Events.ServerPingEvent;
 import me.Cooltimmetje.PretparkCore.Events.UserInterfaces.*;
-import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
-import me.Cooltimmetje.PretparkCore.Managers.MaintenanceManager;
-import me.Cooltimmetje.PretparkCore.Managers.NpcManager;
-import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
+import me.Cooltimmetje.PretparkCore.Managers.*;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.RemoteControl.ControlCommand;
 import me.Cooltimmetje.PretparkCore.RemoteControl.RideControl.BlackCobraControl;
@@ -65,6 +62,10 @@ public class Main extends JavaPlugin {
         this.saveDefaultConfig();
         getLogger().info("Starting plugin load protocol... Please wait...");
         startLoad();
+
+        /* PRE SETUP START */
+        GadgetManager.createGadgets();
+        /* PRE SETUP END */
 
         getLogger().info("Registering events...");
         /* EVENT START */
@@ -102,7 +103,6 @@ public class Main extends JavaPlugin {
         hookAPI("SignEdit");
         hookAPI("PCReloader");
         hookAPI("HolographicDisplays");
-//        hookAPI("Citizens");
         /* API END */
 
         getLogger().info("Setting up...");
@@ -136,7 +136,10 @@ public class Main extends JavaPlugin {
 
         Vars.saveUp();
 
+
+
         DataSaver.saveData();
+        Database.close();
         plugin = null;
     }
 

@@ -46,8 +46,10 @@ public class MaintenanceCommand implements CommandExecutor {
                     boolean m = toggle();
                     if (m){
                         ChatUtils.sendMsgTag(p, "ToggleOnderhoud", "Onderhoud staat nu &2aan&a!");
+                        Vars.saveSo();
                     } else {
                         ChatUtils.sendMsgTag(p, "ToggleOnderhoud", "Onderhoud staat nu &cuit&a!");
+                        Vars.saveSo();
                     }
                     MaintenanceManager.fix();
                 } else {
