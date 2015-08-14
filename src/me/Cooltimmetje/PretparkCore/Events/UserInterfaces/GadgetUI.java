@@ -24,6 +24,7 @@
 
 package me.Cooltimmetje.PretparkCore.Events.UserInterfaces;
 
+import me.Cooltimmetje.PretparkCore.Managers.GadgetManager;
 import me.Cooltimmetje.PretparkCore.Utilities.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -42,32 +43,39 @@ public class GadgetUI implements Listener {
     public static void openUI(Player p){
         Inventory inv = Bukkit.createInventory(null, 54, "Gadgets");
 
-        if(p.hasPermission("pretparkcore.gadget.firework")){
-            ItemUtils.createChestDisplay(Material.FIREWORK_CHARGE, 1, 0, "&aVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!\n " +
-                    "\n&aUNLOCKED", inv, 1);
-        } else {
-            ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, "&cVuurwerk", "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! " +
-                    "\n&3&lWAT EEN MOOI DING!\n \n&cLOCKED", inv, 1);
-        }
-        if(p.hasPermission("pretparkcore.gadget.fireworkride")){
-            ItemUtils.createChestDisplay(Material.FIREWORK, 1, 0, "&aVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
-                    "\n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
-                    "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!\n \n&aUNLOCKED", inv, 2);
-        } else {
-            ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, "&cVuurwerk Ritje", "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! " +
-                    "\n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
-                    "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!\n \n&cLOCKED", inv, 2);
-        }
-        if(p.hasPermission("pretparkcore.gadget.stafflaunch")){
-            ItemUtils.createChestDisplay(Material.PISTON_STICKY_BASE, 1, 0, "&aStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
-                    "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!\n \n&aUNLOCKED", inv, 3);
-        } else {
-            ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, "&cStaff Launcher", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
-                    "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!\n \n&cLOCKED", inv, 3);
-        }
-//        ItemUtils.createChestDisplay(Material.RECORD_11, 1, 0, "&a'Very Grown Up' muziek", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", inv, 3);
+        int slot = 1;
+        for(Material m : GadgetManager.name.keySet()){
+            boolean hasPerm = p.hasPermission(GadgetManager.permission.get(m));
+            StringBuilder nameSb = new StringBuilder();
+            if(hasPerm) {
+                nameSb.append("&a");
+            } else {
+                nameSb.append("&c");
+            }
+            nameSb.append(GadgetManager.name.get(m));
+            String name = nameSb.toString().trim();
 
+            String[] loreArray = GadgetManager.lore.get(m);
+            StringBuilder loreSb = new StringBuilder();
+            loreSb.append("&3COOLDOWN: &b").append(GadgetManager.cooldown.get(m)).append(" seconden \n \n");
+            for (String aLoreArray : loreArray) {
+                loreSb.append(aLoreArray).append("\n");
+            }
+            loreSb.append(" \n");
+            if(hasPerm){
+                loreSb.append("&aUNLOCKED");
+            } else {
+                loreSb.append("&cLOCKED");
+            }
+            String lore = loreSb.toString().trim();
 
+            if(hasPerm) {
+                ItemUtils.createChestDisplay(m, 1, 0, name, lore, inv, slot);
+            } else {
+                ItemUtils.createChestDisplay(Material.STAINED_GLASS_PANE, 1, 14, name, lore, inv, slot);
+            }
+            slot = slot + 1;
+        }
 
         p.openInventory(inv);
     }
@@ -79,40 +87,23 @@ public class GadgetUI implements Listener {
             Player p = (Player) event.getWhoClicked();
             event.setCancelled(true);
             if(event.getCurrentItem().hasItemMeta()) {
-                switch (event.getCurrentItem().getType()){
-                    default:
-                        break;
-                    case FIREWORK_CHARGE:
-                        p.closeInventory();
-                        p.getInventory().setHeldItemSlot(7);
-                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
-                        ItemUtils.createInventoryDisplay(p, Material.FIREWORK_CHARGE, 1, (byte)0, "&aGadget &8\u00BB &aVuurwerk &3(Rechter Klik)",
-                                "&3COOLDOWN: &b15 seconden\n \n&3Een leuk vuurwerkje, lekker simpel! \n&3&lWAT EEN MOOI DING!", 8);
-                        break;
-                    case FIREWORK:
-                        p.closeInventory();
-                        p.getInventory().setHeldItemSlot(7);
-                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
-                        ItemUtils.createInventoryDisplay(p, Material.FIREWORK, 1, (byte) 0, "&aGadget &8\u00BB &aVuurwerk Ritje &3(Rechter Klik)",
-                                "&3COOLDOWN: &b30 seconden\n \n&3Het zelfde vuurwerkje, maar dan next level! \n&3Probeer het eens uit!\n \n&3&lLET OP! &3Om freerunnen te voorkomen word je na het\n" +
-                                        "&3gebruik van dit gadget na 5 seconden terug geteleporteerd\n&3waar je dit gadget gebruikt hebt!", 8);
-                        break;
-                    case RECORD_11:
-                        p.closeInventory();
-                        p.getInventory().setHeldItemSlot(7);
-                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
-                        ItemUtils.createInventoryDisplay(p, Material.RECORD_11, 1,(byte) 0, "&aGadget &8\u00BB &a'Very Grown Up' muziek &3(Rechter Klik)", " \n&3Heeft geen uitleg nodig, &lJUST HIT AND GO!", 8);
-                        break;
-                    case PISTON_STICKY_BASE:
-                        p.closeInventory();
-                        p.getInventory().setHeldItemSlot(7);
-                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
-                        ItemUtils.createInventoryDisplay(p, Material.PISTON_STICKY_BASE, 1, (byte) 0, "&aGadget &8\u00BB &aStaff Launcher &3(Rechter Klik)", "&3COOLDOWN: &b60 seconden\n \n&3Vind je het leuk om staff te pesten?" +
-                                "\n&3Dan is dit echt iets voor jou!\n&3Rechtermuis klik met mij op \n&3een staff member en zie ze vliegen!", 8);
-                        break;
+                Material m = event.getCurrentItem().getType();
+
+                StringBuilder nameSb = new StringBuilder();
+                String name = nameSb.append("&aGadget &8\u00BB &a").append(GadgetManager.name.get(m)).append(" &3(Rechter Klik)").toString().trim();
+
+                String[] loreArray = GadgetManager.lore.get(m);
+                StringBuilder loreSb = new StringBuilder();
+                loreSb.append("&cCOOLDOWN: &b").append(GadgetManager.cooldown.get(m)).append(" seconden \n \n");
+                for(int i = 0; i < loreArray.length; i++){
+                    loreSb.append(loreArray[i]).append("\n");
                 }
+                String lore = loreSb.toString().trim();
 
-
+                ItemUtils.createInventoryDisplay(p, m, 1, (byte) 0, name, lore, 8);
+                p.playSound(p.getLocation(), Sound.NOTE_PLING, 50, 1);
+                p.getInventory().setHeldItemSlot(7);
+                p.closeInventory();
             } else {
                 return;
             }

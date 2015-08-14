@@ -366,4 +366,10 @@ public class Database {
             }
         }
    }
+
+    public static void close() {
+        if(hikari != null){
+            hikari.close();
+        }
+    }
 }

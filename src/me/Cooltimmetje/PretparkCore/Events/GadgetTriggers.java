@@ -25,6 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Events;
 
 import com.darkblade12.particleeffect.ParticleEffect;
+import me.Cooltimmetje.PretparkCore.Managers.GadgetManager;
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
@@ -54,12 +55,12 @@ public class GadgetTriggers implements Listener {
 
     static HashMap<String, Long> cdFirework = new HashMap<>();
     HashMap<String, Long> cdFireworkRide = new HashMap<>();
-    static int cdFireworkSec = 15;
-    int cdFireworkRideSec = 30;
+    static int cdFireworkSec = GadgetManager.cooldown.get(Material.FIREWORK_CHARGE);
+    int cdFireworkRideSec = GadgetManager.cooldown.get(Material.FIREWORK);
 
     HashMap<String, Long> cdPunch = new HashMap<>();
     HashMap<String, Long> cdPunchStaff = new HashMap<>();
-    int cdPunchSec = 60;
+    int cdPunchSec = GadgetManager.cooldown.get(Material.PISTON_STICKY_BASE);
 
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
