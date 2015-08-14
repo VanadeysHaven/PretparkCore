@@ -25,6 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Utilities;
 
 import me.Cooltimmetje.PretparkCore.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class Vars {
 
     public static String PRETPARK_NAAM = MiscUtils.color("&a&lSoonTM");
     public static String MOTD = MiscUtils.color(Vars.PRETPARK_NAAM + " &8\u00BB &aBinnenkort... \n");
+    public static String WORLD_NAME = "world";
 
     public static int COIN_GAIN = 30;
     public static int COIN_TIME = 60; //in minutes
@@ -52,6 +54,12 @@ public class Vars {
     public static HashMap<Integer, String> rideLook = new HashMap<>();
 
     /* ARRAY LISTS */
+
+    /* Locations */
+    public static Location signSpawnTopLeft = new Location(Bukkit.getWorld(WORLD_NAME), -1197, 56, 208);
+    public static Location signSpawnTopRight = new Location(Bukkit.getWorld(WORLD_NAME), -1197, 56, 200);
+    public static Location signSpawnBottemLeft = new Location(Bukkit.getWorld(WORLD_NAME), -1197, 55, 208);
+    public static Location signSpawnBottemRight = new Location(Bukkit.getWorld(WORLD_NAME), -1197, 55, 200);
 
     public static void setGlobaldata(){
         globaldata.put("uniqueplayers", Main.getPlugin().getConfig().getInt("Globaldata.uniqueusers"));

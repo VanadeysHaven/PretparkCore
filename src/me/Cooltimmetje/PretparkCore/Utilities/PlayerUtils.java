@@ -61,6 +61,7 @@ public class PlayerUtils {
         ChatUtils.sendMsg(p, "&6+" + coinsGained + " coins! (" + reason + ")");
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         ScoreboardUtils.updateScoreboard(p, false);
+        WorldUtils.updateSpawnSigns(p);
     }
 
     public static void setCoins(Player p, int amount, String reason){
@@ -69,6 +70,7 @@ public class PlayerUtils {
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         ScoreboardUtils.updateScoreboard(p, false);
         ChatUtils.sendMsg(p, "&6=" + amount + " coins! (" + reason + ")");
+        WorldUtils.updateSpawnSigns(p);
     }
 
     public static void takeCoins(Player p, int coinsGained, String reason){
@@ -78,6 +80,7 @@ public class PlayerUtils {
         ChatUtils.sendMsg(p, "&6-" + coinsGained + " coins! (" + reason + ")");
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         ScoreboardUtils.updateScoreboard(p, false);
+        WorldUtils.updateSpawnSigns(p);
     }
 
     public static void setCoinTime(Player p, int time){

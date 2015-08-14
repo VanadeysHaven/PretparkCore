@@ -27,10 +27,7 @@ package me.Cooltimmetje.PretparkCore.Events;
 import me.Cooltimmetje.PretparkCore.Managers.ChatManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
-import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -92,6 +89,8 @@ public class JoinQuitEvent implements Listener {
                 ResourcePackManager.setRP(pfinal);
             }
         });
+
+        WorldUtils.updateSpawnSigns(p);
     }
 
     @EventHandler

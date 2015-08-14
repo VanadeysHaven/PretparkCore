@@ -24,25 +24,21 @@
 
 package me.Cooltimmetje.PretparkCore.Utilities;
 
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.Entity;
+import me.Cooltimmetje.PretparkCore.Utilities.Packets.WorldPackets;
+import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 13-8-2015 at 17:23 by cooltimmetje.
+ * This class has been created on 14-8-2015 at 19:07 by cooltimmetje.
  */
-public class EntityUtils {
+public class WorldUtils {
 
-    public static void noAI(Entity bukkitEntity) {
-        net.minecraft.server.v1_8_R3.Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
-        NBTTagCompound tag = nmsEntity.getNBTTag();
-        if (tag == null) {
-            tag = new NBTTagCompound();
-        }
-        nmsEntity.c(tag);
-        tag.setInt("NoAI", 1);
-        tag.setInt("Silent", 1);
-        nmsEntity.f(tag);
+    public static void updateSpawnSigns(Player p) {
+
+        WorldPackets.setPlayerSign(p, Vars.signSpawnTopLeft, "&lWelkom", p.getName() + "!", "Je speelt nu op:", Vars.PRETPARK_NAAM);
+        WorldPackets.setPlayerSign(p, Vars.signSpawnTopRight, "&lWelkom", p.getName() + "!", "Je speelt nu op:", Vars.PRETPARK_NAAM);
+        WorldPackets.setPlayerSign(p, Vars.signSpawnBottemLeft, "&8[&5Jouw Stats&8]", "&6" + PlayerUtils.getCoins(p) + " coins", "", "");
+        WorldPackets.setPlayerSign(p, Vars.signSpawnBottemRight, "&8[&5Jouw Stats&8]", "&6" + PlayerUtils.getCoins(p) + " coins", "", "");
+
     }
 
 }
