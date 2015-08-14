@@ -34,6 +34,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
@@ -100,6 +101,7 @@ public class NpcManager implements Listener {
         Entity e = event.getRightClicked();
         if((e instanceof Villager) && !(e instanceof Minecart)){
             if(e == gadgetEntity){
+                event.setCancelled(true);
                 openGadget(p);
             }
         }
@@ -198,5 +200,11 @@ public class NpcManager implements Listener {
         }
     }
 
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event){
+        if(entitys.contains(event.getEntity())){
+            event.setCancelled(true);
+        }
+    }
 
 }

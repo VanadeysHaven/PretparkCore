@@ -102,7 +102,6 @@ public class Main extends JavaPlugin {
         hookAPI("SignEdit");
         hookAPI("PCReloader");
         hookAPI("HolographicDisplays");
-//        hookAPI("Citizens");
         /* API END */
 
         getLogger().info("Setting up...");
