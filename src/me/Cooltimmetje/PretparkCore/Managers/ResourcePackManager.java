@@ -34,6 +34,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
@@ -98,6 +99,10 @@ public class ResourcePackManager implements Listener {
             for(int i = 0; i < 100; i++) {
                 p.sendMessage("");
             }
+            ChatManager.joinDisable.remove(p);
+            p.removePotionEffect(PotionEffectType.SLOW);
+            p.removePotionEffect(PotionEffectType.JUMP);
+            p.removePotionEffect(PotionEffectType.BLINDNESS);
             ChatUtils.sendMsgTag(p, "ResourcePack", "Download geslaagd! Applausje voor je zelf! ^.^ &lVeel plezier!");
             ChatUtils.sendMsgTag(p, "Chat", "&lJe kunt nu chatten!");
             p.sendMessage("");
