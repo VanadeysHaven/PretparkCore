@@ -94,7 +94,7 @@ public class GadgetUI implements Listener {
 
                 String[] loreArray = GadgetManager.lore.get(m);
                 StringBuilder loreSb = new StringBuilder();
-                loreSb.append("&cCOOLDOWN: &b").append(GadgetManager.cooldown.get(m)).append(" seconden \n \n");
+                loreSb.append("&3COOLDOWN: &b").append(GadgetManager.cooldown.get(m)).append(" seconden \n \n");
                 for(int i = 0; i < loreArray.length; i++){
                     loreSb.append(loreArray[i]).append("\n");
                 }

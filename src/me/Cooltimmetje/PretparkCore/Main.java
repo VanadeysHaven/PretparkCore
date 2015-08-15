@@ -66,6 +66,7 @@ public class Main extends JavaPlugin {
 
         /* PRE SETUP START */
         GadgetManager.createGadgets();
+        KledingManager.setCategories();
         /* PRE SETUP END */
 
         getLogger().info("Registering events...");

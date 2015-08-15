@@ -48,6 +48,7 @@ public class NpcManager implements Listener {
 
     static String world = "world";
     static Entity gadgetEntity;
+    static Entity merchant;
 
     static int FIREWORK_COST = 100;
     static int FIREWORKRIDE_COST = 200;
@@ -89,7 +90,7 @@ public class NpcManager implements Listener {
         EntityUtils.noAI(food);
         entitys.add(food);
 
-        Hologram foodHolo = HologramsAPI.createHologram(Main.getPlugin(), gadget.getLocation().add(0, 2.6, 0));
+        Hologram foodHolo = HologramsAPI.createHologram(Main.getPlugin(), food.getLocation().add(0, 2.6, 0));
         foodHolo.appendTextLine(MiscUtils.color("&bCocktail Bar"));
         foodHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
         holograms.add(foodHolo);
@@ -112,8 +113,14 @@ public class NpcManager implements Listener {
             if(e == gadgetEntity){
                 event.setCancelled(true);
                 openGadget(p);
+            } else if (e == merchant){
+                event.setCancelled(true);
+                openMerchant(p);
             }
         }
+    }
+
+    private void openMerchant(Player p) {
     }
 
     private void openGadget(Player p) {
