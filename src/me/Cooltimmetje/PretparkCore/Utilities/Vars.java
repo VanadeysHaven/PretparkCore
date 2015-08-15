@@ -27,6 +27,7 @@ package me.Cooltimmetje.PretparkCore.Utilities;
 import me.Cooltimmetje.PretparkCore.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import java.util.HashMap;
 
@@ -52,6 +53,13 @@ public class Vars {
     public static HashMap<Integer, String> rideStatus = new HashMap<>();
     public static HashMap<Integer, Integer> rideSlot = new HashMap<>();
     public static HashMap<Integer, String> rideLook = new HashMap<>();
+
+    public static HashMap<String, Material> helmet = new HashMap<>();
+    public static HashMap<String, Material> chest = new HashMap<>();
+    public static HashMap<String, Material> legs = new HashMap<>();
+    public static HashMap<String, Material> boots = new HashMap<>();
+    public static HashMap<String, Boolean> enchantment = new HashMap<>();
+
 
     /* ARRAY LISTS */
 

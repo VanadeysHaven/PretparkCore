@@ -166,6 +166,7 @@ public class GadgetTriggers implements Listener {
             GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
             ChatUtils.sendMsgTag(p, "Firework", "Je stak een vuurwerkje af! &lWAT EEN MOOI DING.");
             cdFirework.put(p.getName(), System.currentTimeMillis());
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "playsound custom.Vuurwerk " + p.getName() + " " + p.getLocation().getBlockX() + " " + p.getLocation().getBlockY() + " " + p.getLocation().getBlockZ());
         } else {
             ChatUtils.sendMsgTag(p, "Firework", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFirework.get(p.getName()), cdFireworkSec)) +
                     " &awachten voordat je dit weer mag gebruiken.");

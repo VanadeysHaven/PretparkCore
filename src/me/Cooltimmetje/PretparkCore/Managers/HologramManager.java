@@ -22,38 +22,15 @@
  * SOFTWARE.
  */
 
-package me.Cooltimmetje.PretparkCore.Utilities;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+package me.Cooltimmetje.PretparkCore.Managers;
 
 /**
- * This class has been created on 28-7-2015 at 20:54 by cooltimmetje.
+ * This class has been created on 15-8-2015 at 17:15 by cooltimmetje.
  */
-public class ChatUtils {
+public class HologramManager {
 
-    public static void sendMsg(Player p, String msg){
-        p.sendMessage(MiscUtils.color(msg));
+    public static void spawnHolograms() {
+
     }
-
-    public static void sendMsgTag(Player p, String tag, String msg){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void bcMsgTag(String tag, String msg){
-        Bukkit.broadcastMessage(MiscUtils.color("&9" + tag + "&9> &a" + msg));
-    }
-
-    public static void sendNoPremTag(Player p, String tag){
-        p.sendMessage(MiscUtils.color("&9" + tag + "&9> &a" + error + "Je mag dit niet doen!"));
-    }
-
-    public static void clearChat(Player p){
-        for(int i = 0; i < 100; i++){
-            p.sendMessage("");
-        }
-    }
-
-    public static String error = "&c&lERROR! &a";
 
 }

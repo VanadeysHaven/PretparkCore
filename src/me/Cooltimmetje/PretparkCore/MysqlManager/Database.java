@@ -33,6 +33,7 @@ import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -372,4 +373,162 @@ public class Database {
             hikari.close();
         }
     }
+
+    public static void loadSettings(Player p) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String uuid = PlayerUtils.getUUID(p);
+        String load = "SELECT * FROM playersettings WHERE uuid= '" + uuid + "';";
+
+        try{
+            c = hikari.getConnection();
+            ps = c.prepareStatement(load);
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                setSettings(rs, p);
+            } else {
+                createSettings(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void createSettings(Player p) {
+        Main.getPlugin().getLogger().info("Creating settings for: " + p.getName());
+        Connection c = null;
+        PreparedStatement ps = null;
+        String uuid = PlayerUtils.getUUID(p);
+        String create = "INSERT INTO playersettings VALUES(?,?,?,?,?,?,?)";
+
+        try {
+            c = hikari.getConnection();
+            ps = c.prepareStatement(create);
+
+            ps.setString(1, uuid);
+            ps.setString(2, p.getName());
+            ps.setString(3, "AIR");
+            ps.setString(4, "AIR");
+            ps.setString(5, "AIR");
+            ps.setString(6, "AIR");
+            ps.setInt(7, 0);
+
+            ps.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void setSettings(ResultSet rs, Player p) {
+        try {
+            Vars.helmet.put(p.getName(), Material.getMaterial(rs.getString("helmet")));
+            Vars.chest.put(p.getName(), Material.getMaterial(rs.getString("chest")));
+            Vars.legs.put(p.getName(), Material.getMaterial(rs.getString("legs")));
+            Vars.boots.put(p.getName(), Material.getMaterial(rs.getString("boots")));
+            if(rs.getInt("enchant") == 1){
+                Vars.enchantment.put(p.getName(), true);
+            } else {
+                Vars.enchantment.put(p.getName(), false);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveSettings(Player p , boolean leave) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        String uuid = PlayerUtils.getUUID(p);
+        String save = "UPDATE playersettings SET last_name=?,helmet=?,chest=?,legs=?,boots=?,enchant=? WHERE uuid=?";
+
+        try{
+            c = hikari.getConnection();
+            ps = c.prepareStatement(save);
+
+            ps.setString(1, p.getName());
+            ps.setString(2, Vars.helmet.get(p.getName()).toString());
+            ps.setString(3, Vars.chest.get(p.getName()).toString());
+            ps.setString(4, Vars.legs.get(p.getName()).toString());
+            ps.setString(5, Vars.boots.get(p.getName()).toString());
+//            if(Vars.enchantment.get(p.getName())) {
+//                ps.setInt(6, 1);
+//            } else {
+//                ps.setInt(6, 0);
+//            }
+            ps.setInt(6, 0);
+            ps.setString(7, uuid);
+
+            ps.execute();
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            if(c != null){
+                try {
+                    c.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if(leave){
+                removeSettings(p);
+            }
+        }
+
+    }
+
+    private static void removeSettings(Player p) {
+        Vars.helmet.remove(p.getName());
+        Vars.chest.remove(p.getName());
+        Vars.legs.remove(p.getName());
+        Vars.boots.remove(p.getName());
+        Vars.enchantment.remove(p.getName());
+    }
+
 }

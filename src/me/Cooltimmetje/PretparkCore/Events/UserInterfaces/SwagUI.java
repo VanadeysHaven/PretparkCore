@@ -43,7 +43,7 @@ public class SwagUI implements Listener {
         Inventory inv = Bukkit.createInventory(null, 27, "Swag Menu");
 
         ItemUtils.createChestDisplay(Material.PISTON_BASE, 1, 0, "&aGadgets", "&3De nieuwste snufjes in Minecraft Technoligie\n&3vind je hier! Probeer ze allemaal!", inv, 13);
-        ItemUtils.createChestDisplay(Material.IRON_CHESTPLATE, 1, 0, "&aKleding Kast", "&3Opzoek naar wat &odraagbare swag&3?\nKijk hier! We hebben voor ieder wat wils!", inv, 15);
+        ItemUtils.createChestDisplay(Material.IRON_CHESTPLATE, 1, 0, "&aKleding Kast", "&3Opzoek naar wat &odraagbare swag&3?\n&3Kijk hier! We hebben voor ieder wat wils!", inv, 15);
 
         p.openInventory(inv);
     }

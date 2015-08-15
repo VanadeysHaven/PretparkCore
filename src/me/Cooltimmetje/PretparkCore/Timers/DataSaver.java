@@ -42,6 +42,7 @@ public class DataSaver {
             public void run() {
                 for(Player p : Bukkit.getOnlinePlayers()){
                     Database.saveData(p, false);
+                    Database.saveSettings(p, false);
                 }
                 for(int i : Vars.rideStatus.keySet()){
                     Database.saveRides(i);

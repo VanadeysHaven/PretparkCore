@@ -25,6 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Managers;
 
 import me.Cooltimmetje.PretparkCore.Utilities.ItemUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.Vars;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,6 +54,11 @@ public class InventoryManager implements Listener{
             ItemUtils.createInventoryDisplay(p, Material.COMMAND_MINECART, 1, (byte) 0, "&aAttractie Besturing &3(Rechter Klik)", "&7&oTODO", 3); //TODO: MAKE LORE
         }
         ItemUtils.createInventoryDisplay(p, Material.CHEST, 1, (byte) 0, "&aSwag Menu &3(Rechter Klik)", "&7Upgrade je swag naar &lOVER 9000!", 9); //TODO: MAKE LORE
+
+        p.getInventory().setHelmet(new ItemStack(Vars.helmet.get(p.getName())));
+        p.getInventory().setChestplate(new ItemStack(Vars.chest.get(p.getName())));
+        p.getInventory().setLeggings(new ItemStack(Vars.legs.get(p.getName())));
+        p.getInventory().setBoots(new ItemStack(Vars.boots.get(p.getName())));
     }
 
     @EventHandler

@@ -55,7 +55,7 @@ public class NpcManager implements Listener {
     static int STAFFPUNCH_COST = 300;
 
     static ArrayList<Entity> entitys = new ArrayList<>();
-    static ArrayList<Hologram> holograms = new ArrayList<>();
+    public static ArrayList<Hologram> holograms = new ArrayList<>();
 
     public static void spawnNPCs(){
         Entity pet = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1249, 55, 242, -120, 0).add(0.5, 0, 0.5), EntityType.VILLAGER);

@@ -48,6 +48,7 @@ public class JoinQuitEvent implements Listener {
         final Player pfinal = event.getPlayer();
 
         Database.loadData(p);
+        Database.loadSettings(p);
         ScoreboardUtils.constructScoreboard(p);
 
         ScheduleUtils.scheduleTask(20, new Runnable() {
@@ -72,8 +73,7 @@ public class JoinQuitEvent implements Listener {
                 pfinal.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 127, false, false));
                 pfinal.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 129, false, false));
 
-                for(int i=0; i < 100; i ++)
-                {
+                for(int i=0; i < 100; i ++) {
                     pfinal.sendMessage("");
                 }
 
@@ -99,6 +99,7 @@ public class JoinQuitEvent implements Listener {
 
         ScoreboardUtils.destroyScoreboard(p);
         Database.saveData(p, true);
+        Database.saveSettings(p, true);
 
 //        SwagUI.removeBalloon(p);
 

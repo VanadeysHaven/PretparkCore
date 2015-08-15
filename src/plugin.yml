@@ -30,3 +30,5 @@ commands:
         description: control
     togglem:
         description: togglem
+    cc:
+        description: cc

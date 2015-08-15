@@ -79,7 +79,7 @@ public class Main extends JavaPlugin {
                     , new ResourcePackManager(), new SignLinkEvent()
                     , new BlackCobraControl(), new ControlUI()
                     , new ServerPingEvent(), new NpcManager()
-                    , new ChatManager()
+                    , new ChatManager(), new KledingUI()
             );
         /* EVENT END */
 
@@ -98,6 +98,7 @@ public class Main extends JavaPlugin {
         getCommand("listvars").setExecutor(new SignLinkEvent());
         getCommand("control").setExecutor(new ControlCommand());
         getCommand("togglem").setExecutor(new MaintenanceCommand());
+        getCommand("cc").setExecutor(new ClearChatCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
@@ -114,6 +115,7 @@ public class Main extends JavaPlugin {
         Database.connectToDatabase();
         for(Player p : Bukkit.getOnlinePlayers()){
             Database.loadData(p);
+            Database.loadSettings(p);
             PlayerUtils.fixGamemode(p);
             ScoreboardUtils.constructScoreboard(p);
             WorldUtils.updateSpawnSigns(p);
@@ -125,6 +127,7 @@ public class Main extends JavaPlugin {
         SignLinkController.setup();
         MaintenanceManager.fix();
         NpcManager.spawnNPCs();
+        HologramManager.spawnHolograms();
         /* SETUP STOP */
 
         getLogger().info("Plugin loading succeeded! The plugin is now ready for use. (Loadtime: " + stopLoad() + "ms)");

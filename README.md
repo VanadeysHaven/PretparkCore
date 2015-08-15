@@ -27,6 +27,9 @@
 - `pretparkcore.staffbepunch`
   - This permission is _supposed_ to be given to all members's of staff.
   - Player with this permission can be punched by players with the gadget.
+- `pretparkcore.clearchat`
+  - This permission allows the player to clear the chat.
+  - Players with this command will not have their chat cleared.
     
 ## Commands
 > Arguments: (required) [optional]
@@ -73,6 +76,9 @@
 - `/control (ride)`
   - This command will show the specified ride's 'remote control'. This will allow RideOP's to actually ride the ride and control it at the same time!
   - This command requires the `pretparkcore.controlrides` permission node!
+- `/cc`
+  - This command will clear the chat for all players that do NOT have the `pretparkcore.clearchat` permission!
+  - This command requires the `pretparkcore.clearchat` permission node!
 
 
 ## Configuration File
