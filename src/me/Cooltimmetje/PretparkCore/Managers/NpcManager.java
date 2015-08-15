@@ -48,6 +48,7 @@ public class NpcManager implements Listener {
 
     static String world = "world";
     static Entity gadgetEntity;
+    static Entity merchant;
 
     static int FIREWORK_COST = 100;
     static int FIREWORKRIDE_COST = 200;
@@ -66,7 +67,7 @@ public class NpcManager implements Listener {
         petHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
         holograms.add(petHolo);
 
-        Entity merchant = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1249, 55, 240, -90, 0).add(0.5, 0, 0.5), EntityType.VILLAGER);
+        Entity merchant = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1197, 54, 59, -15, 0).add(0.5, 0, 0.5), EntityType.VILLAGER);
         EntityUtils.noAI(merchant);
         entitys.add(merchant);
 
@@ -84,6 +85,15 @@ public class NpcManager implements Listener {
         gadgetHolo.appendTextLine(MiscUtils.color("&bGadget Shop"));
         gadgetHolo.appendTextLine(MiscUtils.color("&a&lRIGHT CLICK"));
         holograms.add(gadgetHolo);
+
+        Entity food = Bukkit.getWorld(world).spawnEntity(new Location(Bukkit.getWorld(world), -1184, 54, 60, -180, 0).add(0.5,0,0.5), EntityType.VILLAGER);
+        EntityUtils.noAI(food);
+        entitys.add(food);
+
+        Hologram foodHolo = HologramsAPI.createHologram(Main.getPlugin(), food.getLocation().add(0, 2.6, 0));
+        foodHolo.appendTextLine(MiscUtils.color("&bCocktail Bar"));
+        foodHolo.appendTextLine(MiscUtils.color("&7&lSoonTM"));
+        holograms.add(foodHolo);
     }
 
     public static void removeNPCs(){
@@ -103,8 +113,14 @@ public class NpcManager implements Listener {
             if(e == gadgetEntity){
                 event.setCancelled(true);
                 openGadget(p);
+            } else if (e == merchant){
+                event.setCancelled(true);
+                openMerchant(p);
             }
         }
+    }
+
+    private void openMerchant(Player p) {
     }
 
     private void openGadget(Player p) {

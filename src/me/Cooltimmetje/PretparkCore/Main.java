@@ -41,6 +41,7 @@ import me.Cooltimmetje.PretparkCore.Timers.DataSaver;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
+import me.Cooltimmetje.PretparkCore.Utilities.WorldUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -65,6 +66,7 @@ public class Main extends JavaPlugin {
 
         /* PRE SETUP START */
         GadgetManager.createGadgets();
+        KledingManager.setCategories();
         /* PRE SETUP END */
 
         getLogger().info("Registering events...");
@@ -114,6 +116,7 @@ public class Main extends JavaPlugin {
             Database.loadData(p);
             PlayerUtils.fixGamemode(p);
             ScoreboardUtils.constructScoreboard(p);
+            WorldUtils.updateSpawnSigns(p);
         }
         DataSaver.dataSaver();
         CoinsGiver.coinsGiver();

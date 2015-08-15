@@ -42,7 +42,8 @@ public class SwagUI implements Listener {
     public static void openUI(Player p){
         Inventory inv = Bukkit.createInventory(null, 27, "Swag Menu");
 
-        ItemUtils.createChestDisplay(Material.PISTON_BASE, 1, 0, "Gadgets", "&3De nieuwste snufjes in Minecraft Technoligie\n&3vind je hier! Probeer ze allemaal!", inv, 14);
+        ItemUtils.createChestDisplay(Material.PISTON_BASE, 1, 0, "&aGadgets", "&3De nieuwste snufjes in Minecraft Technoligie\n&3vind je hier! Probeer ze allemaal!", inv, 13);
+        ItemUtils.createChestDisplay(Material.IRON_CHESTPLATE, 1, 0, "&aKleding Kast", "&3Opzoek naar wat &odraagbare swag&3?\nKijk hier! We hebben voor ieder wat wils!", inv, 15);
 
         p.openInventory(inv);
     }
@@ -60,6 +61,9 @@ public class SwagUI implements Listener {
                         GadgetUI.openUI(p);
                         p.playSound(p.getLocation(), Sound.CLICK, 50, 1);
                         break;
+                    case IRON_CHESTPLATE:
+                        KledingUI.openKleding(p);
+                        p.playSound(p.getLocation(), Sound.CLICK, 50, 1);
                 }
             } else {
                 return;

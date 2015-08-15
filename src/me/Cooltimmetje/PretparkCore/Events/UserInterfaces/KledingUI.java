@@ -22,27 +22,32 @@
  * SOFTWARE.
  */
 
-package me.Cooltimmetje.PretparkCore.Utilities;
+package me.Cooltimmetje.PretparkCore.Events.UserInterfaces;
 
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.entity.Entity;
+import me.Cooltimmetje.PretparkCore.Managers.KledingManager;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 /**
- * This class has been created on 13-8-2015 at 17:23 by cooltimmetje.
+ * This class has been created on 14-8-2015 at 20:00 by cooltimmetje.
  */
-public class EntityUtils {
+public class KledingUI {
 
-    public static void noAI(Entity bukkitEntity) {
-        net.minecraft.server.v1_8_R3.Entity nmsEntity = ((CraftEntity) bukkitEntity).getHandle();
-        NBTTagCompound tag = nmsEntity.getNBTTag();
-        if (tag == null) {
-            tag = new NBTTagCompound();
+    public static void openKleding(Player p){
+        Inventory inv = Bukkit.createInventory(null, 27, "Kleding Sets");
+
+        int slot = 0;
+        for(Material m : KledingManager.nameCat.keySet()){
+            String name,lore;
+
+
+
+            slot = slot + 1;
         }
-        nmsEntity.c(tag);
-        tag.setInt("NoAI", 1);
-        tag.setInt("Silent", 1);
-        nmsEntity.f(tag);
+
+        p.openInventory(inv);
     }
 
 }
