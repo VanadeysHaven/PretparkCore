@@ -41,7 +41,7 @@ public class GadgetMethods {
 
     public static Firework shootFirework(Location loc, String world){
         //Spawn the Firework, get the FireworkMeta.
-        final Firework fw = (Firework) Bukkit.getWorld(world).spawnEntity(loc, EntityType.FIREWORK);
+        Firework fw = (Firework) Bukkit.getWorld(world).spawnEntity(loc, EntityType.FIREWORK);
         FireworkMeta fwm = fw.getFireworkMeta();
 
         //Our random generator
