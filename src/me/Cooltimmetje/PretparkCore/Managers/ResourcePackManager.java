@@ -95,14 +95,16 @@ public class ResourcePackManager implements Listener {
                             "Ga naar de volgende link voor meer informatie: [TODO]"));
                 }
             });
-        } else if(status == Status.SUCCESSFULLY_LOADED){
-            for(int i = 0; i < 100; i++) {
+        } else if(status == Status.SUCCESSFULLY_LOADED) {
+            for (int i = 0; i < 100; i++) {
                 p.sendMessage("");
             }
             ChatManager.joinDisable.remove(p);
-            p.removePotionEffect(PotionEffectType.SLOW);
-            p.removePotionEffect(PotionEffectType.JUMP);
-            p.removePotionEffect(PotionEffectType.BLINDNESS);
+            if (!p.isOp()) {
+                p.removePotionEffect(PotionEffectType.SLOW);
+                p.removePotionEffect(PotionEffectType.JUMP);
+                p.removePotionEffect(PotionEffectType.BLINDNESS);
+            }
             ChatUtils.sendMsgTag(p, "ResourcePack", "Download geslaagd! Applausje voor je zelf! ^.^ &lVeel plezier!");
             ChatUtils.sendMsgTag(p, "Chat", "&lJe kunt nu chatten!");
             p.sendMessage("");

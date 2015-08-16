@@ -29,6 +29,7 @@ import me.Cooltimmetje.PretparkCore.Managers.GadgetManager;
 import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
+import me.Cooltimmetje.PretparkCore.Utilities.Packets.TitleUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
 import org.bukkit.*;
 import org.bukkit.block.Jukebox;
@@ -110,18 +111,18 @@ public class GadgetTriggers implements Listener {
                                         cdPunch.put(p.getName(), System.currentTimeMillis());
                                         cdPunchStaff.put(target.getName(), System.currentTimeMillis());
                                     } else {
-                                        ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunchStaff.get(p.getName()), cdPunchSec)) +
+                                        TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunchStaff.get(p.getName()), cdPunchSec)) +
                                                 " &awachten voordat&c" + target.getName() + "&aje weer kan punchen!");
                                     }
                                 } else {
-                                    ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunch.get(p.getName()), cdPunchSec)) +
+                                    TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunch.get(p.getName()), cdPunchSec)) +
                                             " &awachten voordat je dit weer mag gebruiken.");
                                 }
                             } else {
-                                ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
+                                TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
                             }
                         } else {
-                            ChatUtils.sendMsgTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
+                            TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
                         }
                     }
                 } else {
@@ -147,7 +148,7 @@ public class GadgetTriggers implements Listener {
             final Location loc = p.getLocation();
             Firework fw = GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
             fw.setPassenger(p);
-            ChatUtils.sendMsgTag(p, "FireworkRide", "&lWHEEE!");
+            TitleUtils.sendActionTag(p, "FireworkRide", "&lWHEEE!");
             final Player pfinal = p;
             cdFireworkRide.put(p.getName(), System.currentTimeMillis());
             ScheduleUtils.scheduleTask(100, new Runnable() {
@@ -157,7 +158,7 @@ public class GadgetTriggers implements Listener {
                 }
             });
         } else {
-            ChatUtils.sendMsgTag(p, "FireworkRide", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFireworkRide.get(p.getName()), cdFireworkRideSec)) +
+            TitleUtils.sendActionTag(p, "FireworkRide", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFireworkRide.get(p.getName()), cdFireworkRideSec)) +
                     " &awachten voordat je dit weer mag gebruiken.");
         }
     }
@@ -165,11 +166,11 @@ public class GadgetTriggers implements Listener {
     public static void shootFirework(Player p) {
         if(!cdFirework.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdFirework.get(p.getName()), cdFireworkSec)) {
             GadgetMethods.shootFirework(p.getLocation(), p.getWorld().getName());
-            ChatUtils.sendMsgTag(p, "Firework", "Je stak een vuurwerkje af! &lWAT EEN MOOI DING.");
+            TitleUtils.sendActionTag(p, "Firework", "Je stak een vuurwerkje af! &lWAT EEN MOOI DING.");
             cdFirework.put(p.getName(), System.currentTimeMillis());
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "playsound custom.Vuurwerk " + p.getName() + " " + p.getLocation().getBlockX() + " " + p.getLocation().getBlockY() + " " + p.getLocation().getBlockZ());
         } else {
-            ChatUtils.sendMsgTag(p, "Firework", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFirework.get(p.getName()), cdFireworkSec)) +
+            TitleUtils.sendActionTag(p, "Firework", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdFirework.get(p.getName()), cdFireworkSec)) +
                     " &awachten voordat je dit weer mag gebruiken.");
         }
     }

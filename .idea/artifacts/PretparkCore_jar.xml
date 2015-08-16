@@ -3,9 +3,9 @@
     <output-path>$PROJECT_DIR$/out/artifacts/PretparkCore</output-path>
     <root id="archive" name="PretparkCore.jar">
       <element id="module-output" name="PretparkCore" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Minecraft/Developement stuff/slf4j-api-1.7.12.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Minecraft/Developement stuff/javassist.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Api's/HikariCP-java6-2.3.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Minecraft/Developement stuff/javassist.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Minecraft/Developement stuff/slf4j-api-1.7.12.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

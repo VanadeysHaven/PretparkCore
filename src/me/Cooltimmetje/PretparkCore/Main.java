@@ -38,6 +38,7 @@ import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkController;
 import me.Cooltimmetje.PretparkCore.RemoteControl.SignLinkEvent;
 import me.Cooltimmetje.PretparkCore.Timers.CoinsGiver;
 import me.Cooltimmetje.PretparkCore.Timers.DataSaver;
+import me.Cooltimmetje.PretparkCore.Utilities.Packets.TitleUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScoreboardUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.Vars;
@@ -107,6 +108,7 @@ public class Main extends JavaPlugin {
         hookAPI("SignEdit");
         hookAPI("PCReloader");
         hookAPI("HolographicDisplays");
+        hookAPI("TitleManager");
         /* API END */
 
         getLogger().info("Setting up...");
@@ -119,6 +121,7 @@ public class Main extends JavaPlugin {
             PlayerUtils.fixGamemode(p);
             ScoreboardUtils.constructScoreboard(p);
             WorldUtils.updateSpawnSigns(p);
+            TitleUtils.updateTab(p, false);
         }
         DataSaver.dataSaver();
         CoinsGiver.coinsGiver();

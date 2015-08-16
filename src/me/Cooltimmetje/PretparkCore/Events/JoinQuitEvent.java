@@ -28,6 +28,7 @@ import me.Cooltimmetje.PretparkCore.Managers.ChatManager;
 import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.MysqlManager.Database;
 import me.Cooltimmetje.PretparkCore.Utilities.*;
+import me.Cooltimmetje.PretparkCore.Utilities.Packets.TitleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,21 +58,24 @@ public class JoinQuitEvent implements Listener {
                 PlayerUtils.fixGamemode(pfinal);
             }
         });
+
         for(Player pl : Bukkit.getOnlinePlayers()){
             ScoreboardUtils.updateScoreboard(pl, false);
+            if(pl != p){
+                TitleUtils.updateTab(p, false);
+            }
         }
-
-
-
-
 
         ScheduleUtils.scheduleTask(20, new Runnable() {
             @Override
             public void run() {
                 ChatManager.joinDisable.add(pfinal);
-                pfinal.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 255, false, false));
-                pfinal.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 127, false, false));
-                pfinal.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 129, false, false));
+
+                if(!pfinal.isOp()) {
+                    pfinal.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 255, false, false));
+                    pfinal.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 127, false, false));
+                    pfinal.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 129, false, false));
+                }
 
                 for(int i=0; i < 100; i ++) {
                     pfinal.sendMessage("");
@@ -80,6 +84,8 @@ public class JoinQuitEvent implements Listener {
                 ChatUtils.sendMsgTag(pfinal, "ResourcePack", "Over 5 seconden gaan we de ResourcePack naar je sturen... Druk op &lJA &aals er om een bevestiging word gevraagd! " +
                         "&a&nAls je op nee drukt krijg je een kick!");
                 pfinal.sendMessage("");
+
+                TitleUtils.updateTab(pfinal, false);
             }
         });
 
@@ -106,6 +112,7 @@ public class JoinQuitEvent implements Listener {
         for(Player pl : Bukkit.getOnlinePlayers()){
             if(p != pl) {
                 ScoreboardUtils.updateScoreboard(pl, true);
+                TitleUtils.updateTab(pl, true);
             }
         }
     }
