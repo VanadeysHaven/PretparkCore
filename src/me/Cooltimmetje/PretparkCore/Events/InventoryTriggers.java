@@ -33,6 +33,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * This class has been created on 29-7-2015 at 15:55 by cooltimmetje.
@@ -49,8 +50,11 @@ public class InventoryTriggers implements Listener {
                         default:
                             break;
                         case SKULL_ITEM:
-                            event.setCancelled(true);
-                            ProfileUI.openUI(p);
+                            SkullMeta skullMeta = (SkullMeta) event.getItem().getItemMeta();
+                            if(skullMeta.getOwner().equals(p.getName())) {
+                                event.setCancelled(true);
+                                ProfileUI.openUI(p);
+                            }
                             break;
                         case MINECART:
                             event.setCancelled(true);

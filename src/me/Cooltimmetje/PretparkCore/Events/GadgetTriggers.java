@@ -30,10 +30,7 @@ import me.Cooltimmetje.PretparkCore.Utilities.ChatUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.GadgetMethods;
 import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
 import me.Cooltimmetje.PretparkCore.Utilities.ScheduleUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Minecart;
@@ -76,8 +73,12 @@ public class GadgetTriggers implements Listener {
                             shootFirework(p);
                             break;
                         case FIREWORK:
-                            event.setCancelled(true);
-                            shootFireworkRide(p);
+                            if(event.getItem().getItemMeta().hasDisplayName()){
+                                if(ChatColor.stripColor(event.getItem().getItemMeta().getDisplayName()).contains("Gadget")){
+                                    event.setCancelled(true);
+                                    shootFireworkRide(p);
+                                }
+                            }
                             break;
                         case RECORD_11:
                             event.setCancelled(true);
