@@ -216,6 +216,22 @@ public class MiscUtils {
         return (int) (((currentTime - lastUsed ) / 1000) - cdtime) * -1;
     }
 
+    public static String formatTime(long start, long end){
+        long delta = end - start;
+        int min = 0;
+        int sec = 0;
+        while (delta > 60000){
+            min++;
+            delta = delta - 60000;
+        }
+        while (delta > 1000){
+            sec++;
+            delta = delta - 1000;
+        }
+        int ms = (int) delta;
+        return min + ":" + sec + "." + ms;
+    }
+
     public static String formatTime(int seconds){
         int minutes = 0;
         while(seconds >= 60){

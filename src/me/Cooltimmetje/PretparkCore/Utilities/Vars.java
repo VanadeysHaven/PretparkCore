@@ -53,12 +53,15 @@ public class Vars {
     public static HashMap<Integer, String> rideStatus = new HashMap<>();
     public static HashMap<Integer, Integer> rideSlot = new HashMap<>();
     public static HashMap<Integer, String> rideLook = new HashMap<>();
+    public static HashMap<Integer, String> rpLink = new HashMap<>();
 
     public static HashMap<String, Material> helmet = new HashMap<>();
     public static HashMap<String, Material> chest = new HashMap<>();
     public static HashMap<String, Material> legs = new HashMap<>();
     public static HashMap<String, Material> boots = new HashMap<>();
     public static HashMap<String, Boolean> enchantment = new HashMap<>();
+    public static HashMap<String, Integer> rp = new HashMap<>();
+
 
 
     /* ARRAY LISTS */
@@ -82,5 +85,10 @@ public class Vars {
     public static void saveSo(){
         Main.getPlugin().getConfig().set("Globaldata.server_onderhoud", globaldata.get("onderhoud"));
         Main.getPlugin().saveConfig();
+    }
+
+    public static void setRpLink(){
+        rpLink.put(1, "https://www.dropbox.com/s/s2odyn70j652tn4/Themepark%20-%20Lite.zip?dl=1"); //lite
+        rpLink.put(2, "https://www.dropbox.com/s/k858bnq8wi1lss3/Themepark%20-%20Heavy.zip?dl=1"); //heavy
     }
 }

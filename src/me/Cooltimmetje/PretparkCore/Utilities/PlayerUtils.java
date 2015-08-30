@@ -26,6 +26,7 @@ package me.Cooltimmetje.PretparkCore.Utilities;
 
 import com.evilmidget38.UUIDFetcher;
 import me.Cooltimmetje.PretparkCore.Managers.InventoryManager;
+import me.Cooltimmetje.PretparkCore.Utilities.Packets.TitleUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -54,6 +55,14 @@ public class PlayerUtils {
         return Vars.coinsTime.get(p.getName());
     }
 
+    public static int getRP(Player p){
+        return Vars.rp.get(p.getName());
+    }
+
+    public static void setRP(Player p, int rp){
+        Vars.rp.put(p.getName(), rp);
+    }
+
     public static void addCoins(Player p, int coinsGained, String reason){
         int curCoins = getCoins(p);
         Vars.coins.remove(p.getName());
@@ -61,7 +70,7 @@ public class PlayerUtils {
         ChatUtils.sendMsg(p, "&6+" + coinsGained + " coins! (" + reason + ")");
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         ScoreboardUtils.updateScoreboard(p, false);
-        WorldUtils.updateSpawnSigns(p);
+        TitleUtils.updateTab(p, false);
     }
 
     public static void setCoins(Player p, int amount, String reason){
@@ -71,6 +80,7 @@ public class PlayerUtils {
         ScoreboardUtils.updateScoreboard(p, false);
         ChatUtils.sendMsg(p, "&6=" + amount + " coins! (" + reason + ")");
         WorldUtils.updateSpawnSigns(p);
+        TitleUtils.updateTab(p, false);
     }
 
     public static void takeCoins(Player p, int coinsGained, String reason){
@@ -81,6 +91,7 @@ public class PlayerUtils {
         p.playSound(p.getLocation(), Sound.LEVEL_UP, 100, 1);
         ScoreboardUtils.updateScoreboard(p, false);
         WorldUtils.updateSpawnSigns(p);
+        TitleUtils.updateTab(p, false);
     }
 
     public static void setCoinTime(Player p, int time){

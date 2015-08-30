@@ -464,6 +464,7 @@ public class Database {
             Vars.chest.put(p.getName(), Material.getMaterial(rs.getString("chest")));
             Vars.legs.put(p.getName(), Material.getMaterial(rs.getString("legs")));
             Vars.boots.put(p.getName(), Material.getMaterial(rs.getString("boots")));
+            Vars.rp.put(p.getName(), rs.getInt("rp"));
             if(rs.getInt("enchant") == 1){
                 Vars.enchantment.put(p.getName(), true);
             } else {
@@ -478,7 +479,7 @@ public class Database {
         Connection c = null;
         PreparedStatement ps = null;
         String uuid = PlayerUtils.getUUID(p);
-        String save = "UPDATE playersettings SET last_name=?,helmet=?,chest=?,legs=?,boots=?,enchant=? WHERE uuid=?";
+        String save = "UPDATE playersettings SET last_name=?,helmet=?,chest=?,legs=?,boots=?,enchant=?,rp=? WHERE uuid=?";
 
         try{
             c = hikari.getConnection();
@@ -495,7 +496,8 @@ public class Database {
 //                ps.setInt(6, 0);
 //            }
             ps.setInt(6, 0);
-            ps.setString(7, uuid);
+            ps.setInt(7, Vars.rp.get(p.getName()));
+            ps.setString(8, uuid);
 
             ps.execute();
         } catch (SQLException e){

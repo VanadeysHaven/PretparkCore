@@ -25,6 +25,7 @@
 package me.Cooltimmetje.PretparkCore.Utilities;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -100,4 +101,9 @@ public class ItemUtils {
         inv.setItem(slot - 1, is);
     }
 
+    public static void test(){
+        Inventory inv = Bukkit.createInventory(null, 9, "KoolInventory");
+
+        createChestDisplay(Material.POTATO_ITEM, 1, 0, "KoolPotato", "This is a multi\nline item lore", inv, 1);
+    }
 }

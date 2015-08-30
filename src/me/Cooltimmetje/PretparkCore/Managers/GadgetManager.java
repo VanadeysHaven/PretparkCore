@@ -60,6 +60,20 @@ public class GadgetManager {
         cooldown.put(Material.PISTON_STICKY_BASE, 60);
         cost.put(Material.PISTON_STICKY_BASE, 300);
         permission.put(Material.PISTON_STICKY_BASE, "pretparkcore.gadget.stafflaunch");
+
+        /* HeavyStaff Launcher */
+        name.put(Material.SLIME_BLOCK, "Heavy Staff Launcher");
+        lore.put(Material.SLIME_BLOCK, "&3Het ultieme wapen tegen de staff!\n&3&lFLY BITCH!".split("\n"));
+        cooldown.put(Material.SLIME_BLOCK, 120);
+        cost.put(Material.SLIME_BLOCK, 600);
+        permission.put(Material.SLIME_BLOCK, "pretparkcore.gadget.heavystafflaunch");
+
+        /* Snowball Launcher */
+        name.put(Material.WOOD_HOE, "Snowball Gun");
+        lore.put(Material.WOOD_HOE, "&3Pew pew!".split("\n"));
+        cooldown.put(Material.WOOD_HOE, 0);
+        cost.put(Material.WOOD_HOE, 150);
+        permission.put(Material.WOOD_HOE, "pretparkcore.gadget.snowballgun");
     }
 
 

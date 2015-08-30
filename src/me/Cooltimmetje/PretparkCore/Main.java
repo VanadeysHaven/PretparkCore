@@ -24,6 +24,7 @@
 
 package me.Cooltimmetje.PretparkCore;
 
+import me.Cooltimmetje.PretparkCore.Bundles.Parkour.ParkourTracker;
 import me.Cooltimmetje.PretparkCore.Commands.*;
 import me.Cooltimmetje.PretparkCore.Events.GadgetTriggers;
 import me.Cooltimmetje.PretparkCore.Events.InventoryTriggers;
@@ -81,6 +82,7 @@ public class Main extends JavaPlugin {
                     , new BlackCobraControl(), new ControlUI()
                     , new ServerPingEvent(), new NpcManager()
                     , new ChatManager(), new KledingUI()
+                    , new ParkourTracker()
             );
         /* EVENT END */
 
@@ -100,6 +102,7 @@ public class Main extends JavaPlugin {
         getCommand("control").setExecutor(new ControlCommand());
         getCommand("togglem").setExecutor(new MaintenanceCommand());
         getCommand("cc").setExecutor(new ClearChatCommand());
+        getCommand("rp").setExecutor(new ResourcePackCommand());
         /* COMMAND END */
 
         getLogger().info("Opening API hooks...");
@@ -114,6 +117,7 @@ public class Main extends JavaPlugin {
         getLogger().info("Setting up...");
         /* SETUP START */
         Vars.setGlobaldata();
+        Vars.setRpLink();
         Database.connectToDatabase();
         for(Player p : Bukkit.getOnlinePlayers()){
             Database.loadData(p);
@@ -145,8 +149,6 @@ public class Main extends JavaPlugin {
         NpcManager.removeNPCs();
 
         Vars.saveUp();
-
-
 
         DataSaver.saveData();
         Database.close();

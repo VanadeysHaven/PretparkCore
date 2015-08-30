@@ -52,7 +52,11 @@ public class ProfileUI implements Listener {
         ItemUtils.createChestDisplay(skull, inv, 5);
 
         ItemUtils.createChestDisplay(Material.GOLD_NUGGET, 1, (byte) 0, "&eJe hebt momenteel &6" + PlayerUtils.getCoins(p) + " coins&a!",
-                "&7Wees online om meer te verdienen!", inv, 14);
+                "&7Wees online om meer te verdienen!", inv, 13);
+
+
+
+
         ItemUtils.createChestDisplay(Material.ARROW, 1, (byte) 0, "&cSluiten", null, inv, 10);
 
         p.openInventory(inv);

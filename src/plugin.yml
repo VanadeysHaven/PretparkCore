@@ -32,3 +32,5 @@ commands:
         description: togglem
     cc:
         description: cc
+    rp:
+        description: rp

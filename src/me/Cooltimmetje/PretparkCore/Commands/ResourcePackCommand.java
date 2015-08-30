@@ -22,36 +22,32 @@
  * SOFTWARE.
  */
 
-package me.Cooltimmetje.PretparkCore.Utilities.Packets;
+package me.Cooltimmetje.PretparkCore.Commands;
 
-import io.puharesource.mc.titlemanager.api.ActionbarTitleObject;
-import io.puharesource.mc.titlemanager.api.TabTitleObject;
-import me.Cooltimmetje.PretparkCore.Utilities.MiscUtils;
+import me.Cooltimmetje.PretparkCore.Main;
+import me.Cooltimmetje.PretparkCore.Managers.ResourcePackManager;
 import me.Cooltimmetje.PretparkCore.Utilities.PlayerUtils;
-import me.Cooltimmetje.PretparkCore.Utilities.Vars;
-import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * This class has been created on 16-8-2015 at 15:37 by cooltimmetje.
+ * This class has been created on 8/30/2015 at 14:41 by cooltimmetje.
  */
-public class TitleUtils {
+public class ResourcePackCommand implements CommandExecutor {
 
-    public static void updateTab(Player p, boolean leave){
-        int online = Bukkit.getOnlinePlayers().size();
-        if(leave){
-            online = online - 1;
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("rp")) {
+            if (sender instanceof Player) {
+                Player p = (Player) sender;
+                PlayerUtils.setRP(p, 0);
+                ResourcePackManager.setRP(p);
+            } else {
+                Main.getPlugin().getLogger().warning("This command can only be executed by a player!");
+            }
         }
-
-        new TabTitleObject(MiscUtils.color("&aWelkom in " + Vars.PRETPARK_NAAM + "&a!\n&aNu online: &8(&6" + online + "&8/&6" + Bukkit.getMaxPlayers() + "&8)"),
-                MiscUtils.color("&aIngelogd als &8\u00BB " + p.getDisplayName() + "\n&6" + PlayerUtils.getCoins(p) + " coins")).send(p);
+        return true;
     }
 
-    public static void sendAction(Player p, String text){
-        new ActionbarTitleObject(MiscUtils.color(text)).send(p);
-    }
-
-    public static void sendActionTag(Player p, String tag, String text){
-        new ActionbarTitleObject(MiscUtils.color("&9" + tag + "> &a" + text)).send(p);
-    }
 }

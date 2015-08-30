@@ -71,13 +71,13 @@ public class JoinQuitEvent implements Listener {
             public void run() {
                 ChatManager.joinDisable.add(pfinal);
 
-                if(!pfinal.isOp()) {
+                if (!pfinal.isOp()) {
                     pfinal.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 99999, 255, false, false));
                     pfinal.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999, 127, false, false));
                     pfinal.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 99999, 129, false, false));
                 }
 
-                for(int i=0; i < 100; i ++) {
+                for (int i = 0; i < 100; i++) {
                     pfinal.sendMessage("");
                 }
 
@@ -85,7 +85,9 @@ public class JoinQuitEvent implements Listener {
                         "&a&nAls je op nee drukt krijg je een kick!");
                 pfinal.sendMessage("");
 
-                TitleUtils.updateTab(pfinal, false);
+                for (Player pl : Bukkit.getOnlinePlayers()) {
+                    TitleUtils.updateTab(pl, false);
+                }
             }
         });
 

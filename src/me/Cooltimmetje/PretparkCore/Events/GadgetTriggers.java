@@ -36,6 +36,7 @@ import org.bukkit.block.Jukebox;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -52,13 +53,15 @@ import java.util.HashMap;
 public class GadgetTriggers implements Listener {
 
     static HashMap<String, Long> cdFirework = new HashMap<>();
-    HashMap<String, Long> cdFireworkRide = new HashMap<>();
     static int cdFireworkSec = GadgetManager.cooldown.get(Material.FIREWORK_CHARGE);
+
     int cdFireworkRideSec = GadgetManager.cooldown.get(Material.FIREWORK);
+    HashMap<String, Long> cdFireworkRide = new HashMap<>();
 
     HashMap<String, Long> cdPunch = new HashMap<>();
     HashMap<String, Long> cdPunchStaff = new HashMap<>();
     int cdPunchSec = GadgetManager.cooldown.get(Material.PISTON_STICKY_BASE);
+    int cdHeavyPunch = GadgetManager.cooldown.get(Material.SLIME_BLOCK);
 
     @EventHandler
     public void onRightClickItem(PlayerInteractEvent event){
@@ -81,6 +84,12 @@ public class GadgetTriggers implements Listener {
                                 }
                             }
                             break;
+                        case WOOD_HOE:
+                            Snowball sb = p.launchProjectile(Snowball.class);
+                            sb.setShooter(p);
+                            sb.setVelocity(p.getLocation().getDirection().multiply(1.7));
+                            p.playSound(p.getLocation(), Sound.IRONGOLEM_THROW, 100, 1);
+                            break;
                         case RECORD_11:
                             event.setCancelled(true);
                             playMusic(p);
@@ -96,14 +105,14 @@ public class GadgetTriggers implements Listener {
     public void onRightClick(PlayerInteractEntityEvent event){
         if(!(event.getRightClicked() instanceof Minecart)){
             if(event.getPlayer().getItemInHand() != null){
-                if(event.getPlayer().getItemInHand().getType() == Material.PISTON_STICKY_BASE){
-                    if(event.getPlayer().getItemInHand().hasItemMeta()){
+                if(event.getPlayer().getItemInHand().getType() == Material.PISTON_STICKY_BASE) {
+                    if (event.getPlayer().getItemInHand().hasItemMeta()) {
                         Player p = event.getPlayer();
-                        if(event.getRightClicked() instanceof Player){
+                        if (event.getRightClicked() instanceof Player) {
                             Player target = (Player) event.getRightClicked();
-                            if(target.hasPermission("pretparkcore.staffbepunch") || target.isOp()){
-                                if(!cdPunch.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdPunch.get(p.getName()), cdPunchSec)){
-                                    if(!cdPunchStaff.containsKey(target.getName()) || MiscUtils.cooldownCheck(cdPunchStaff.get(target.getName()), cdPunchSec)){
+                            if (target.hasPermission("pretparkcore.staffbepunch") || target.isOp()) {
+                                if (!cdPunch.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdPunch.get(p.getName()), cdPunchSec)) {
+                                    if (!cdPunchStaff.containsKey(target.getName()) || MiscUtils.cooldownCheck(cdPunchStaff.get(target.getName()), cdPunchSec)) {
                                         ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 47, target.getLocation(), 16);
                                         Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 20, 1);
                                         target.setFlying(false);
@@ -125,6 +134,35 @@ public class GadgetTriggers implements Listener {
                             TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
                         }
                     }
+                } else if(event.getPlayer().getItemInHand().getType() == Material.SLIME_BLOCK) {
+                    if(event.getPlayer().getItemInHand().hasItemMeta()){
+                        Player p = event.getPlayer();
+                        if(event.getRightClicked() instanceof Player){
+                            Player target = (Player) event.getRightClicked();
+                            if(target.hasPermission("pretparkcore.staffbepunch") || target.isOp()){
+                                if(!cdPunch.containsKey(p.getName()) || MiscUtils.cooldownCheck(cdPunch.get(p.getName()), cdHeavyPunch)){
+                                    if(!cdPunchStaff.containsKey(target.getName()) || MiscUtils.cooldownCheck(cdPunchStaff.get(target.getName()), cdHeavyPunch)){
+                                        ParticleEffect.EXPLOSION_LARGE.display(5, 5, 5, 1, 100, target.getLocation(), 16);
+                                        Bukkit.getWorld(target.getWorld().getName()).playSound(target.getLocation(), Sound.EXPLODE, 40, 1);
+                                        target.setFlying(false);
+                                        target.setVelocity(new Vector(0, 9, 0));
+                                        cdPunch.put(p.getName(), System.currentTimeMillis());
+                                        cdPunchStaff.put(target.getName(), System.currentTimeMillis());
+                                    } else {
+                                        TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunchStaff.get(p.getName()), cdHeavyPunch)) +
+                                                " &awachten voordat&c" + target.getName() + "&aje weer kan punchen!");
+                                    }
+                                } else {
+                                    TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Je moet nog &c" + MiscUtils.formatTime(MiscUtils.getTimeRemaining(cdPunch.get(p.getName()), cdHeavyPunch)) +
+                                            " &awachten voordat je dit weer mag gebruiken.");
+                                }
+                            } else {
+                                TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
+                            }
+                        } else {
+                            TitleUtils.sendActionTag(p, "StaffPunch", ChatUtils.error + "Dit is geen staff member!");
+                        }
+                    }
                 } else {
                     return;
                 }
@@ -136,7 +174,7 @@ public class GadgetTriggers implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
-        if(event.getPlayer().getItemInHand().getType() == Material.PISTON_STICKY_BASE){
+        if(event.getPlayer().getItemInHand().getType() == Material.PISTON_STICKY_BASE || event.getPlayer().getItemInHand().getType() == Material.SLIME_BLOCK){
             if(event.getPlayer().getItemInHand().hasItemMeta()){
                 event.setCancelled(true);
             }
